@@ -1,7 +1,10 @@
 version: '3.7'
 
 services:
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8616894 (naive approach to invoke docker, leveraging the fact that the .wpnd folder exists)
   wordpress:
     image: ${WPND_IMAGE_NAME}:latest
     build:
@@ -14,9 +17,14 @@ services:
       WORDPRESS_DB_USER: exampleuser
       WORDPRESS_DB_PASSWORD: examplepass
       WORDPRESS_DB_NAME: exampledb
+<<<<<<< HEAD
       REMOVE_DEFAULT_WP_THEMES: $WPND_REMOVE_DEFAULT_WP_THEMES
     volumes:
       - ../${WPND_HOST_DIR_PATH}:/usr/src/wpnd
+=======
+    volumes:
+      - ../wp-content:/var/www/html/wp-content
+>>>>>>> 8616894 (naive approach to invoke docker, leveraging the fact that the .wpnd folder exists)
 
   db:
     image: mysql:5.7

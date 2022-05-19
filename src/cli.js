@@ -1,13 +1,19 @@
 import fs from 'fs/promises';
 import { constants as FSConstants } from 'fs'
 import path from 'path';
+import execa from 'execa';
 import chalk from "chalk";
 import inquirer from 'inquirer';
 import { Command } from 'commander';
 
 const program = new Command();
-const defaultConfigOptions = {};
-const supportedConfigFileFileFormat = ['.wpndrc', 'wpnd.config.js', 'wpnd.config.json'];
+
+const defaultConfigFile = 'wpnd.config.js';
+const defaultConfigOptions = {
+    // cannot leave project directory
+    distDir: '.wpnd',
+    port: '8085',
+};
 
 void (async () => {
     const pkg = JSON.parse(await fs.readFile(path.resolve(__dirname, '../package.json'), { encoding: 'utf-8' }));
@@ -19,20 +25,27 @@ void (async () => {
         .showSuggestionAfterError();
 })();
 
-const extractValuesFromConfigFile = async (value) => {
-    let configFilePathProvided = value
+const extractValuesFromConfigFile = async (userValue) => {
+    let configFilePathProvided = userValue || defaultConfigFile;
 
-    if (value && !/^\//.test(value)) {
-        configFilePathProvided = path.join(process.cwd(), value);
+    if (configFilePathProvided && !/^\//.test(configFilePathProvided)) {
+        configFilePathProvided = path.join(process.cwd(), configFilePathProvided);
     }
 
     try {
         await fs.access(configFilePathProvided, FSConstants.R_OK);
-        const config = JSON.parse(await fs.readFile(configFilePathProvided, { encoding: 'utf-8' }));
+        let parsedConfig = {};
+        if(/.json$/.test(configFilePathProvided)) {
+            parsedConfig = JSON.parse(await fs.readFile(configFilePathProvided, { encoding: 'utf-8' }));
+        } else if (!/.js$/.test(configFilePathProvided)) {
+            throw new Error('Unsupported config file extension')
+        }
+
+        parsedConfig = require(configFilePathProvided)
 
         return {
             ...defaultConfigOptions,
-            ...config
+            ...parsedConfig
         };
     } catch {
         console.log('%s unable to find config file at path specified',  chalk.red.bold('ERROR'));
@@ -57,8 +70,6 @@ async function projectInit () {
         ...answers
     }
 
-    console.log('configs:: %o \n', config);
-
     //FIXME: forward collected options to method that will generate config file
 }
 
@@ -81,16 +92,40 @@ program
 program
     .command('start')
     .description('Starts a project development environment')
-    .option('-c --config <file>', 'path to config file', extractValuesFromConfigFile)
-    .action(bootstrapTemplateFiles)
+    .option('-c,--config <file>', 'path to config file')
+    .action(async (options) => {
+        const _options = {
+            ...options,
+            config: await extractValuesFromConfigFile(options.config)
+        }
 
-program
-    .command('disposable')
-    .description('Starts a disposable development environment')
-    .option('-c --config <file>', 'path to config file', extractValuesFromConfigFile)
-    .action(() => {
-        //TODO: add command that will run for disposable
-    })
+        const runner = execa(
+            'docker-compose',
+            [
+                [ '--project-name', _options.config.name],
+                [ '--file', path.join(process.cwd(), _options.config.distDir, 'stack.yml')],
+                'up'
+            ].flat(),
+            {
+                env: {
+                    'WPND_IMAGE_NAME' : _options.config.name,
+                    'WPND_IMAGE_PORT' : _options.config.port,
+                }
+            }
+        )
+
+        runner.stdout.pipe(process.stdout)
+        runner.stderr.pipe(process.stdout)
+    });
+
+//TODO: allow users to spin a disposable wordpress instance
+// program
+//     .command('disposable')
+//     .description('Starts a disposable development environment')
+//     .option('-c,--config <file>', 'path to config file')
+//     .action(() => {
+//         //TODO: add command that will run for disposable
+//     });
 
 export async function cli (args) {
     await program.parseAsync(args)
