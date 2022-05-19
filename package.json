@@ -1,0 +1,32 @@
+{
+  "name": "wpnd",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Eyo Okon Eyo <maziey93@gmail.com>",
+  "license": "MIT",
+  "bin": {
+    "@eokoneyo/wpnd": "bin/index.js",
+    "wpnd": "bin/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">= 14"
+  },
+  "keywords": [
+    "cli",
+    "wpnd"
+  ],
+  "devDependencies": {},
+  "dependencies": {
+    "arg": "^5.0.1",
+    "chalk": "4.1.2",
+    "commander": "^9.2.0",
+    "ejs": "^3.1.8",
+    "esm": "^3.2.25",
+    "execa": "^6.1.0",
+    "inquirer": "^8.2.4",
+    "ncp": "^2.0.0"
+  }
+}
