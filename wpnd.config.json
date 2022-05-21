@@ -1,7 +1,11 @@
 {
+<<<<<<< HEAD
   "name": "random800833",
   "srcDir": "wp-content",
   "environment": {
     "rebuildOnStart": true
   }
+=======
+  "name": "random"
+>>>>>>> dd76286 (switch to esm module for package, and make docker related templates to be reused)
 }
