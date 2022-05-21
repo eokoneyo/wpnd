@@ -85,6 +85,11 @@ program
             }
         )
 
+        // setup handler to terminate runner usind CTRL+C
+        process.on('SIGINT', () => {
+            process.kill(runner.pid, 'SIGINT')
+        })
+
         runner.stdout.pipe(process.stdout)
         runner.stderr.pipe(process.stdout)
     });
