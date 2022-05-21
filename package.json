@@ -19,12 +19,23 @@
     "cli",
     "wpnd"
   ],
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.2",
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.1",
+    "prettier": "2.6.2"
+  },
   "dependencies": {
     "chalk": "4.1.2",
     "commander": "^9.2.0",
     "cpy": "^9.0.1",
     "execa": "^6.1.0",
     "inquirer": "^8.2.4"
+  },
+  "scripts": {
+    "prepare": "husky install"
   }
 }
