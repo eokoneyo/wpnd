@@ -16,7 +16,7 @@ services:
       WORDPRESS_DB_NAME: exampledb
       REMOVE_DEFAULT_WP_THEMES: $WPND_REMOVE_DEFAULT_WP_THEMES
     volumes:
-      - ./src/wp-content:/var/www/html/wp-content
+      - ../wp-content:/var/www/html/wp-content
 
   db:
     image: mysql:5.7
