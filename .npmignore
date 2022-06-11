@@ -1,0 +1,7 @@
+.idea/
+.github/
+.husky/
+.editorconfig
+.prettierrc.json
+.eslintcache
+.eslintrc
