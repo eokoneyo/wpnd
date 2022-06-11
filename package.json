@@ -9,7 +9,8 @@
     "wpnd": "bin/index.js"
   },
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint ."
   },
   "publishConfig": {
     "access": "public"
