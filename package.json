@@ -6,8 +6,10 @@
   "author": "Eyo Okon Eyo <maziey93@gmail.com>",
   "license": "MIT",
   "bin": {
-    "@eokoneyo/wpnd": "bin/index.js",
     "wpnd": "bin/index.js"
+  },
+  "scripts": {
+    "prepare": "husky install"
   },
   "publishConfig": {
     "access": "public"
@@ -16,6 +18,7 @@
     "node": ">= 14"
   },
   "keywords": [
+    "wordpress",
     "cli",
     "wpnd"
   ],
@@ -24,6 +27,7 @@
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^4.0.0",
     "husky": "^8.0.1",
     "lint-staged": "^12.4.1",
     "prettier": "2.6.2"
@@ -33,9 +37,9 @@
     "commander": "^9.2.0",
     "cpy": "^9.0.1",
     "execa": "^6.1.0",
-    "inquirer": "^8.2.4"
-  },
-  "scripts": {
-    "prepare": "husky install"
+    "inquirer": "^8.2.4",
+    "listr": "^0.14.3",
+    "lodash.merge": "^4.6.2",
+    "schema-utils": "^4.0.0"
   }
 }
