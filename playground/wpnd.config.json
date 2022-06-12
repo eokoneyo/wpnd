@@ -1,0 +1,7 @@
+{
+  "name": "random808443",
+  "srcDir": "wp-content",
+  "environment": {
+    "rebuildOnStart": true
+  }
+}

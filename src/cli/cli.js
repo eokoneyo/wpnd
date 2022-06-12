@@ -1,3 +1,4 @@
+import * as url from 'url';
 import path from 'path';
 import cpy from 'cpy';
 import chalk from 'chalk';
@@ -11,8 +12,11 @@ import { extractValuesFromConfigFile } from './config/index.js';
 
 const require = createRequire(import.meta.url);
 
+// eslint-disable-next-line import/no-dynamic-require,no-underscore-dangle
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
 // eslint-disable-next-line import/no-dynamic-require
-const pkg = require(path.resolve(process.cwd(), './package.json'));
+const pkg = require(path.resolve(__dirname, '../../package.json'));
 
 const program = new Command();
 
@@ -52,7 +56,10 @@ program
       config: await hk(options.config),
     };
 
-    await cpy('src/templates/*', _options.config.distDir);
+    await cpy(
+      path.join(__dirname, '../templates/*'),
+      path.join(process.cwd(), _options.config.distDir)
+    );
 
     const runner = execa(
       'docker-compose',

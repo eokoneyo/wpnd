@@ -1,0 +1,10 @@
+{
+  "name": "wpnd-playground",
+  "private": true,
+  "scripts": {
+    "dev": "wpnd start"
+  },
+  "dependencies": {
+    "wpnd": "file:../."
+  }
+}

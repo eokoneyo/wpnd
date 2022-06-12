@@ -1,6 +1,5 @@
 .DS_Store
 /node_modules/
-/.wpnd/
+.wpnd/
 /wp-content/
 /.eslintcache
-wpnd.config.json
