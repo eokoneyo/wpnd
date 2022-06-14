@@ -7,9 +7,8 @@
     "ecmaVersion": 2022,
     "sourceType": "module"
   },
-  "extends": [
-    "eslint:recommended",
-    "airbnb-base",
-    "prettier"
-  ]
+  "extends": ["eslint:recommended", "airbnb-base", "prettier"],
+  "rules": {
+    "import/extensions": ["error", { "js": "always", "json": "always" }]
+  }
 }

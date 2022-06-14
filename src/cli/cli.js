@@ -8,7 +8,7 @@ import { Command } from 'commander';
 import { createRequire } from 'module';
 
 import { programConfigFile } from './options.js';
-import { extractValuesFromConfigFile } from './config/index.js';
+import exposeConfigGetterForProgram from './config/index.js';
 
 const require = createRequire(import.meta.url);
 
@@ -20,7 +20,7 @@ const pkg = require(path.resolve(__dirname, '../../package.json'));
 
 const program = new Command();
 
-const hk = extractValuesFromConfigFile(program);
+const extractValuesFromConfigFile = exposeConfigGetterForProgram(program);
 
 program
   .name('wpnd')
@@ -47,40 +47,34 @@ program
     ]);
 
     tasks.run().catch((err) => {
-      console.error(err);
+      program.error(err);
     });
   })
   .action(async (options) => {
-    const _options = {
-      ...options,
-      config: await hk(options.config),
-    };
+    const parsedConfig = await extractValuesFromConfigFile(options.config);
 
     await cpy(
       path.join(__dirname, '../templates/*'),
-      path.join(process.cwd(), _options.config.distDir)
+      path.join(process.cwd(), parsedConfig.distDir)
     );
 
     const runner = execa(
       'docker-compose',
       [
-        ['--project-name', _options.config.name],
-        [
-          '--file',
-          path.join(process.cwd(), _options.config.distDir, 'stack.yml'),
-        ],
+        ['--project-name', parsedConfig.name],
+        ['--file', path.join(process.cwd(), parsedConfig.distDir, 'stack.yml')],
         'up',
-        [_options.config.environment.rebuildOnStart ? '--build' : null],
+        [parsedConfig.environment.rebuildOnStart ? '--build' : null],
       ]
         .flat()
         .filter(Boolean),
       {
         env: {
-          WPND_IMAGE_NAME: _options.config.name,
-          WPND_IMAGE_PORT: _options.config.environment.port,
+          WPND_IMAGE_NAME: parsedConfig.name,
+          WPND_IMAGE_PORT: parsedConfig.environment.port,
           WPND_REMOVE_DEFAULT_WP_THEMES:
-            _options.config.environment.removeDefaultWPThemes,
-          WPND_HOST_DIR_PATH: _options.config.srcDir,
+            parsedConfig.environment.removeDefaultWPThemes,
+          WPND_HOST_DIR_PATH: parsedConfig.srcDir,
         },
       }
     );

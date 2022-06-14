@@ -10,7 +10,6 @@ const require = createRequire(import.meta.url);
 const defaultConfigOptions = {
   srcDir: 'src',
   distDir: '.wpnd', // cannot leave project directory
-  // theme
   environment: {
     port: '8085',
     removeDefaultWPThemes: false,
@@ -19,7 +18,7 @@ const defaultConfigOptions = {
   },
 };
 
-export const extractValuesFromConfigFile =
+const exposeConfigGetterForProgram =
   (program) => async (configFilePathProvided) => {
     // eslint-disable-next-line no-underscore-dangle
     let _configPath = configFilePathProvided;
@@ -46,3 +45,5 @@ export const extractValuesFromConfigFile =
 
     return merge(defaultConfigOptions, parsedConfig);
   };
+
+export default exposeConfigGetterForProgram;
