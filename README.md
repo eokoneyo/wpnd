@@ -7,25 +7,21 @@ about it, you don't even need to have php installed, without all the hassles of 
 
 # Usage
 
-WPND expects a `theme` and `plugin` folder, to host the said theme or plugin you might be creating as a developer, 
+WPND expects a `theme` and `plugin` folder, to host the said theme or plugin you might be creating as a developer, contained in a directory you should place in the project's root. 
 you can either use the WPND helper likeso;
 
 ```bash
-   npx wpnd init
+   npx wpnd start
 ```
 or
 
 ```bash
-   yarn dlx wpnd init
+   yarn dlx wpnd start
 ```
 
-and you'll be prompted with a couple of questions to help config things, or you might simply create a project
-npm or yarn project that has both a `theme` and `plugins` directory
-with a `.wpndrc` file.
-
-For more CLI options, use the `-h (--help)` argument
+and that should provision a working WordPress environment. You might further make customizations by specifying a config file 
 
 # Config Files
 
-WPND currently supports both the `.wpndrc` and `wpnd.json` file. They are usually expected to be in current working directory.
-An Alternative path to the config file might be provided with `--config <file>` option.
+WPND currently supports a `wpnd.config.json` file. They are usually expected to be in the current working directory.
+An Alternative path to the config file might could be provided with `--config <file>` option.
