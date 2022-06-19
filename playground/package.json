@@ -2,6 +2,8 @@
   "name": "wpnd-playground",
   "private": true,
   "scripts": {
-    "dev": "../bin/index.js start"
+    "start": "../bin/index.js start",
+    "destroy": "../bin/index.js destroy",
+    "shell": "../bin/index.js shell"
   }
 }
