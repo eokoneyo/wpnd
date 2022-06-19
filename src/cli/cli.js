@@ -7,7 +7,7 @@ import { execa } from 'execa';
 import { Command } from 'commander';
 import { createRequire } from 'module';
 
-import { programConfigFile } from './options.js';
+import programConfigFile from './options.js';
 import exposeConfigGetterForProgram from './config/index.js';
 
 const require = createRequire(import.meta.url);
