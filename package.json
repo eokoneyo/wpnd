@@ -1,6 +1,6 @@
 {
   "name": "wpnd",
-  "version": "0.0.3",
+  "version": "0.0.0-semantic-release",
   "main": "index.js",
   "type": "module",
   "author": "Eyo Okon Eyo <maziey93@gmail.com>",
@@ -24,6 +24,8 @@
     "wpnd"
   ],
   "devDependencies": {
+    "@commitlint/cli": "^17.0.2",
+    "@commitlint/config-conventional": "^17.0.2",
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "^8.5.0",

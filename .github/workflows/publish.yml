@@ -19,10 +19,15 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies and build 🔧
         run: yarn install --frozen-lockfile
-      - name: Publish package on NPM 📦
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+      - name: Install semantic-release extra plugins
+        run: yarn add @semantic-release/changelog @semantic-release/git --dev
+      - name: Build
+        run: yarn build
+      - name: Release
+        run: yarn dlx semantic-release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   on-code-check-failure:
     runs-on: ubuntu-latest
