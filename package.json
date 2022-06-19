@@ -5,9 +5,7 @@
   "type": "module",
   "author": "Eyo Okon Eyo <maziey93@gmail.com>",
   "license": "MIT",
-  "bin": {
-    "wpnd": "bin/index.js"
-  },
+  "bin": "bin/index.js",
   "scripts": {
     "prepare": "husky install",
     "lint": "eslint ."
@@ -44,5 +42,6 @@
     "listr": "^0.14.3",
     "lodash.merge": "^4.6.2",
     "schema-utils": "^4.0.0"
-  }
+  },
+  "packageManager": "yarn@3.2.1"
 }
