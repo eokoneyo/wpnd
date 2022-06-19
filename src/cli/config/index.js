@@ -11,7 +11,7 @@ const defaultConfigOptions = {
   srcDir: 'src',
   distDir: '.wpnd', // cannot leave project directory
   environment: {
-    port: '8085',
+    port: 8085,
     removeDefaultWPThemes: false,
     skipDockerCheck: false,
     rebuildOnStart: false,

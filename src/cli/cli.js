@@ -81,7 +81,6 @@ program
 
     // setup handler to terminate runner using CTRL+C
     process.on('SIGINT', () => {
-      // process.kill(runner.pid, 'SIGINT');
       runner.cancel();
     });
 
@@ -94,11 +93,18 @@ program
   .description(
     'opens up a interactive tty terminal to the currently running wpnd app'
   )
-  .action(() => {
-    // TODO: Figure out how to get running container ID
+  .addOption(programConfigFile)
+  .action(async (options) => {
+    const parsedConfig = await extractValuesFromConfigFile(options.config);
+
     const disposableRunner = execa(
-      'docker',
-      ['exec', ['-it'], 'bash'].flatten()
+      'docker-compose',
+      [
+        ['--file', path.join(process.cwd(), parsedConfig.distDir, 'stack.yml')],
+        'exec',
+        ['wordpress'],
+        'sh',
+      ].flat()
     );
 
     disposableRunner.stdout.pipe(process.stdout);
@@ -109,25 +115,44 @@ program
   .command('destroy')
   .description('removes the created image for the configuration specified')
   .addOption(programConfigFile)
-  .action(() => {
-    // TODO: add implementation to remove created docker image
-    program.error('Not Implemented');
+  .action(async (options) => {
+    const parsedConfig = await extractValuesFromConfigFile(options.config);
+
+    const disposableRunner = execa(
+      'docker-compose',
+      [
+        ['--file', path.join(process.cwd(), parsedConfig.distDir, 'stack.yml')],
+        'down',
+      ].flat(),
+      {
+        env: {
+          WPND_IMAGE_NAME: parsedConfig.name,
+          WPND_IMAGE_PORT: parsedConfig.environment.port,
+          WPND_REMOVE_DEFAULT_WP_THEMES:
+            parsedConfig.environment.removeDefaultWPThemes,
+          WPND_HOST_DIR_PATH: parsedConfig.srcDir,
+        },
+      }
+    );
+
+    disposableRunner.stdout.pipe(process.stdout);
+    disposableRunner.stderr.pipe(process.stdout);
   });
 
-program
-  .command('disposable')
-  .description('Starts a disposable development environment')
-  .addOption(programConfigFile)
-  .action(() => {
-    program.error('Not Implemented');
+// program
+//   .command('disposable')
+//   .description('Starts a disposable development environment')
+//   .addOption(programConfigFile)
+//   .action(() => {
+//     program.error('Not Implemented');
 
-    // FIXME: add appropriate config to spin up the default wordpress docker image with no modifications
+// FIXME: add appropriate config to spin up the default wordpress docker image with no modifications
 
-    // const disposableRunner = execa('docker', ['run', 'wordpress']);
-    //
-    // disposableRunner.stdout.pipe(process.stdout);
-    // disposableRunner.stderr.pipe(process.stdout);
-  });
+// const disposableRunner = execa('docker', ['run', 'wordpress']);
+//
+// disposableRunner.stdout.pipe(process.stdout);
+// disposableRunner.stderr.pipe(process.stdout);
+// });
 
 async function cli(args) {
   await program.parseAsync(args);
