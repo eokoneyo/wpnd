@@ -1,3 +1,11 @@
+## [0.0.5](https://github.com/eokoneyo/wpnd/compare/v0.0.4...v0.0.5) (2022-06-20)
+
+
+### Bug Fixes
+
+* add support for mu-plugins ([d0d6d55](https://github.com/eokoneyo/wpnd/commit/d0d6d555b699efab62f46e913aec0d99e6c2ed90))
+* exclude build and dev config files from being included in exported package ([c4fa8f1](https://github.com/eokoneyo/wpnd/commit/c4fa8f1aa3e7012f5213454be7d552e7430bf19b))
+
 ## [0.0.4](https://github.com/eokoneyo/wpnd/compare/v0.0.3...v0.0.4) (2022-06-20)
 
 
