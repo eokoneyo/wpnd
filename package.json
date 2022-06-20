@@ -1,0 +1,47 @@
+{
+  "name": "wpnd",
+  "version": "0.0.0-semantic-release",
+  "main": "index.js",
+  "type": "module",
+  "author": "Eyo Okon Eyo <maziey93@gmail.com>",
+  "license": "MIT",
+  "bin": "bin/index.js",
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "eslint ."
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">= 14"
+  },
+  "keywords": [
+    "wordpress",
+    "cli",
+    "wpnd"
+  ],
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.2",
+    "@commitlint/config-conventional": "^17.0.2",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.1",
+    "prettier": "2.6.2"
+  },
+  "dependencies": {
+    "chalk": "4.1.2",
+    "commander": "^9.2.0",
+    "cpy": "^9.0.1",
+    "execa": "^6.1.0",
+    "inquirer": "^8.2.4",
+    "listr": "^0.14.3",
+    "lodash.merge": "^4.6.2",
+    "schema-utils": "^4.0.0"
+  },
+  "packageManager": "yarn@3.2.1"
+}

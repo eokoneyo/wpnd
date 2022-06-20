@@ -1,0 +1,42 @@
+{
+  "title": "WPND",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "name of docker image to be created",
+      "type": "string"
+    },
+    "distDir": {
+      "description": "Specify name for custom build directory to use instead of `.wpnd`; provided value cannot leave project directory",
+      "type": "string"
+    },
+    "srcDir": {
+      "description": "Specify name for directory that will contain the theme and plugin directory",
+      "type": "string"
+    },
+    "skipDockerCheck": {
+      "description": "Specify if check for docker is skipped whilst attempting to provision environment",
+      "type": "boolean"
+    },
+    "environment": {
+      "title": "image",
+      "type": "object",
+      "properties": {
+        "port": {
+          "description": "PORT on which app shall be exposed on",
+          "type": "string"
+        },
+        "removeDefaultWPThemes": {
+          "description": "Specify if the default themes that ship with wordpress should be removed from the provisioned environment",
+          "type": "boolean"
+        },
+        "rebuildOnStart": {
+          "description": "Flag to help decide if image is rebuilt on start",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
