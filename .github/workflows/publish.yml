@@ -18,11 +18,11 @@ jobs:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies and build 🔧
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
       - name: Install semantic-release extra plugins
         run: yarn add @semantic-release/changelog @semantic-release/git --dev
-      - name: Build
-        run: yarn build
+#      - name: Build
+#        run: yarn build
       - name: Release
         run: yarn dlx semantic-release
         env:
