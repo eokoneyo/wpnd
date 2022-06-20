@@ -7,3 +7,7 @@
 .eslintcache
 .eslintrc
 playground
+/.yarnrc.yml
+/.lintstagedrc
+/commitlint.config.cjs
+/.releaserc
