@@ -1,6 +1,7 @@
 .idea/
 .github/
 .husky/
+.yarn/
 .editorconfig
 .prettierrc.json
 .eslintcache
