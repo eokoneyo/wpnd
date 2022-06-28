@@ -1,3 +1,10 @@
+## [0.0.6](https://github.com/eokoneyo/wpnd/compare/v0.0.5...v0.0.6) (2022-06-28)
+
+
+### Bug Fixes
+
+* allow files and directory for mu-plugins, to conform to standard WordPress behaviour ([2b316d5](https://github.com/eokoneyo/wpnd/commit/2b316d5ff8485eb7a16f8d295017e5591ada880c))
+
 ## [0.0.5](https://github.com/eokoneyo/wpnd/compare/v0.0.4...v0.0.5) (2022-06-20)
 
 
