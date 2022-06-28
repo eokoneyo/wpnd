@@ -6,7 +6,7 @@ do
   echo "Linking $dir"
   for f in "/usr/src/wpnd/$dir"/*;
   do
-    if [ ! -d "/usr/src/wordpress/wp-content/$dir/$f" ] && [ -d "$f" ]; then
+    if [[ ! -d "/usr/src/wordpress/wp-content/$dir/$f"  &&  -d "$f" ]] || [ "$dir" = mu-plugins ]; then
 
       # cover case where parent directory doesn't exist; i.e mu-plugins
       if [ ! -d "/usr/src/wordpress/wp-content/$dir" ]; then
