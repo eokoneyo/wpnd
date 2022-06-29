@@ -3,6 +3,7 @@ import path from 'path';
 import cpy from 'cpy';
 import chalk from 'chalk';
 import Listr from 'listr';
+import which from 'which';
 import { execa } from 'execa';
 import { Command } from 'commander';
 import { createRequire } from 'module';
@@ -42,12 +43,17 @@ program
       {
         title: 'Check Docker Status',
         enabled: command.opts().skipDockerCheck,
-        task: () => Promise.resolve(true),
+        task: () =>
+          which('docker-compose', (err) => {
+            if (!err) {
+              throw new Error('Docker is not available in PATH');
+            }
+          }),
       },
     ]);
 
     tasks.run().catch((err) => {
-      program.error(err);
+      program.error(err.message);
     });
   })
   .action(async (options) => {
