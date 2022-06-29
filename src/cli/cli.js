@@ -105,15 +105,17 @@ program
     const parsedConfig = await extractValuesFromConfigFile(options.config);
 
     const disposableRunner = execa(
-      'docker-compose',
+      'docker',
       [
-        ['--file', path.join(process.cwd(), parsedConfig.distDir, 'stack.yml')],
+        'compose',
+        ['--project-name', parsedConfig.name],
         'exec',
-        ['wordpress'],
+        'wordpress',
         'sh',
       ].flat()
     );
 
+    process.stdin.pipe(disposableRunner.stdin);
     disposableRunner.stdout.pipe(process.stdout);
     disposableRunner.stderr.pipe(process.stdout);
   });
