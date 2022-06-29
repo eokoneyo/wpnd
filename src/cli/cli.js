@@ -128,20 +128,8 @@ program
     const parsedConfig = await extractValuesFromConfigFile(options.config);
 
     const disposableRunner = execa(
-      'docker-compose',
-      [
-        ['--file', path.join(process.cwd(), parsedConfig.distDir, 'stack.yml')],
-        'down',
-      ].flat(),
-      {
-        env: {
-          WPND_IMAGE_NAME: parsedConfig.name,
-          WPND_IMAGE_PORT: parsedConfig.environment.port,
-          WPND_REMOVE_DEFAULT_WP_THEMES:
-            parsedConfig.environment.removeDefaultWPThemes,
-          WPND_HOST_DIR_PATH: parsedConfig.srcDir,
-        },
-      }
+      'docker',
+      ['compose', ['--project-name', parsedConfig.name], 'down'].flat()
     );
 
     disposableRunner.stdout.pipe(process.stdout);
