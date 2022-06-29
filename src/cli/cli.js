@@ -136,21 +136,6 @@ program
     disposableRunner.stderr.pipe(process.stdout);
   });
 
-// program
-//   .command('disposable')
-//   .description('Starts a disposable development environment')
-//   .addOption(programConfigFile)
-//   .action(() => {
-//     program.error('Not Implemented');
-
-// FIXME: add appropriate config to spin up the default wordpress docker image with no modifications
-
-// const disposableRunner = execa('docker', ['run', 'wordpress']);
-//
-// disposableRunner.stdout.pipe(process.stdout);
-// disposableRunner.stderr.pipe(process.stdout);
-// });
-
 async function cli(args) {
   await program.parseAsync(args);
 }
