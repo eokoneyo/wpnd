@@ -45,7 +45,7 @@ program
         enabled: command.opts().skipDockerCheck,
         task: () =>
           which('docker-compose', (err) => {
-            if (!err) {
+            if (err) {
               throw new Error('Docker is not available in PATH');
             }
           }),
