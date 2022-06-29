@@ -78,9 +78,10 @@ program
         env: {
           WPND_IMAGE_NAME: parsedConfig.name,
           WPND_IMAGE_PORT: parsedConfig.environment.port,
-          WPND_REMOVE_DEFAULT_WP_THEMES:
-            parsedConfig.environment.removeDefaultWPThemes,
           WPND_HOST_DIR_PATH: parsedConfig.srcDir,
+          DB_NAME: parsedConfig.environment.db.name,
+          DB_USER: parsedConfig.environment.db.user,
+          DB_PASSWORD: parsedConfig.environment.db.password,
         },
       }
     );

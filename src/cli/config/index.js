@@ -15,6 +15,11 @@ const defaultConfigOptions = {
     removeDefaultWPThemes: false,
     skipDockerCheck: false,
     rebuildOnStart: false,
+    db: {
+      name: 'exampledb',
+      user: 'exampleuser',
+      password: 'examplepass',
+    },
   },
 };
 

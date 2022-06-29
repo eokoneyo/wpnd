@@ -26,13 +26,28 @@
           "description": "PORT on which app shall be exposed on",
           "type": "string"
         },
-        "removeDefaultWPThemes": {
-          "description": "Specify if the default themes that ship with wordpress should be removed from the provisioned environment",
-          "type": "boolean"
-        },
         "rebuildOnStart": {
           "description": "Flag to help decide if image is rebuilt on start",
           "type": "boolean"
+        },
+        "db": {
+          "title": "",
+          "type": "object",
+          "description": "",
+          "properties": {
+            "name": {
+              "description": "",
+              "type": "string"
+            },
+            "user": {
+              "description": "",
+              "type": "string"
+            },
+            "password": {
+              "description": "",
+              "type": "string"
+            }
+          }
         }
       },
       "additionalProperties": false
