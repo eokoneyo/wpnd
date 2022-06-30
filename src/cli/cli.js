@@ -105,7 +105,7 @@ program
   .action(async (options) => {
     const parsedConfig = await extractValuesFromConfigFile(options.config);
 
-    const disposableRunner = execa(
+    execa(
       'docker',
       [
         'compose',
@@ -113,12 +113,11 @@ program
         'exec',
         'wordpress',
         'sh',
-      ].flat()
+      ].flat(),
+      {
+        stdio: 'inherit',
+      }
     );
-
-    process.stdin.pipe(disposableRunner.stdin);
-    disposableRunner.stdout.pipe(process.stdout);
-    disposableRunner.stderr.pipe(process.stdout);
   });
 
 program
