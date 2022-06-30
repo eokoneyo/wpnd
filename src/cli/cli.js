@@ -44,7 +44,7 @@ program
         title: 'Check Docker Status',
         enabled: command.opts().skipDockerCheck,
         task: () =>
-          which('docker-compose', (err) => {
+          which('docker', (err) => {
             if (err) {
               throw new Error('Docker is not available in PATH');
             }
@@ -65,8 +65,9 @@ program
     );
 
     const runner = execa(
-      'docker-compose',
+      'docker',
       [
+        'compose',
         ['--project-name', parsedConfig.name],
         ['--file', path.join(process.cwd(), parsedConfig.distDir, 'stack.yml')],
         'up',
@@ -92,7 +93,7 @@ program
     });
 
     runner.stdout.pipe(process.stdout);
-    runner.stderr.pipe(process.stdout);
+    runner.stderr.pipe(process.stderr);
   });
 
 program
@@ -133,7 +134,7 @@ program
     );
 
     disposableRunner.stdout.pipe(process.stdout);
-    disposableRunner.stderr.pipe(process.stdout);
+    disposableRunner.stderr.pipe(process.stderr);
   });
 
 async function cli(args) {
