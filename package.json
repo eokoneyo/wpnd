@@ -4,6 +4,9 @@
   "main": "index.js",
   "type": "module",
   "author": "Eyo Okon Eyo <maziey93@gmail.com>",
+  "repository": {
+    "url": "https://github.com/eokoneyo/wpnd"
+  },
   "license": "MIT",
   "bin": "bin/index.js",
   "scripts": {

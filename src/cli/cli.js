@@ -112,7 +112,7 @@ program
         ['--project-name', parsedConfig.name],
         'exec',
         'wordpress',
-        'sh',
+        'bash',
       ].flat(),
       {
         stdio: 'inherit',
