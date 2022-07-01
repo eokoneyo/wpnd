@@ -88,9 +88,22 @@ program
     );
 
     // setup handler to terminate runner using CTRL+C
-    process.on('SIGINT', () => {
-      runner.cancel();
-    });
+    process.on(
+      'SIGINT',
+      () =>
+        new Promise((resolve, reject) => {
+          // send signal to cancel to our runner
+          runner.cancel();
+
+          runner.once('exit', () => {
+            resolve(undefined);
+          });
+
+          runner.once('error', (err) => {
+            reject(err);
+          });
+        })
+    );
 
     runner.stdout.pipe(process.stdout);
     runner.stderr.pipe(process.stderr);
