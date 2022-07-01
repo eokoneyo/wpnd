@@ -1,3 +1,19 @@
+## [0.0.7](https://github.com/eokoneyo/wpnd/compare/v0.0.6...v0.0.7) (2022-07-01)
+
+
+### Bug Fixes
+
+* allow alternate db credentials to be passed on ([64ff8ac](https://github.com/eokoneyo/wpnd/commit/64ff8ac4f2ef1120fcc12e09faf131c01b8531d3))
+* ensure app gets shutdown gracefully consistently ([d024617](https://github.com/eokoneyo/wpnd/commit/d02461724e56d07adbb366915556e45c64fcb058))
+* get shell command working ([19ee04b](https://github.com/eokoneyo/wpnd/commit/19ee04b4a64f15622de8f54815b4d42fd2af55ca))
+* implement check for docker compose on user's system ([0775e8e](https://github.com/eokoneyo/wpnd/commit/0775e8ee408914fe17c3d612c9351fdf6c867204))
+* leverage newer docker compose api to handle destorying created image ([c2670d7](https://github.com/eokoneyo/wpnd/commit/c2670d76b0c05e53f481302c5b67e3c1dc4fda62))
+* opt for simple approach with provisioning a shell ([aa68d15](https://github.com/eokoneyo/wpnd/commit/aa68d154f05d66007e3ab0f1a4ef0f7d3ab73229))
+* remove unnecessary reference to env that's not passed ([59e386f](https://github.com/eokoneyo/wpnd/commit/59e386f95c18e47559cf0f1fee6a381f730035fc))
+* resolve bug causing file linking to be attempted in cases when it shouldn't ([ddd6de2](https://github.com/eokoneyo/wpnd/commit/ddd6de2558f7ea0a52f62852b4ae6f2f66ffd5d7))
+* switch to invoking compose on docker binary for all commands ([023f925](https://github.com/eokoneyo/wpnd/commit/023f925cce41775394a83e7e4c13df671c156be0))
+* trash idea for disposable project ([3f4c547](https://github.com/eokoneyo/wpnd/commit/3f4c547607b66024cf29a563de206e598b3208d4))
+
 ## [0.0.6](https://github.com/eokoneyo/wpnd/compare/v0.0.5...v0.0.6) (2022-06-28)
 
 
