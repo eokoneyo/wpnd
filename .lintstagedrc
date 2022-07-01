@@ -1,4 +1,4 @@
 {
-  "./**/*.{js}": "eslint --cache --fix --max-warnings 0",
+  "./**/*.js": "eslint --cache --fix --max-warnings 0",
   "./**/*.{js,json}": "prettier --write"
 }

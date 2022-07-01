@@ -4,6 +4,9 @@
   "main": "index.js",
   "type": "module",
   "author": "Eyo Okon Eyo <maziey93@gmail.com>",
+  "repository": {
+    "url": "https://github.com/eokoneyo/wpnd"
+  },
   "license": "MIT",
   "bin": "bin/index.js",
   "scripts": {
@@ -41,7 +44,8 @@
     "inquirer": "^8.2.4",
     "listr": "^0.14.3",
     "lodash.merge": "^4.6.2",
-    "schema-utils": "^4.0.0"
+    "schema-utils": "^4.0.0",
+    "which": "^2.0.2"
   },
   "packageManager": "yarn@3.2.1"
 }
