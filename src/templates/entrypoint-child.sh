@@ -3,17 +3,28 @@ set -euo pipefail
 
 for dir in themes plugins mu-plugins
 do
-  echo "Linking $dir"
   for f in "/usr/src/wpnd/$dir"/*;
   do
-    if [[ ! -d "/usr/src/wordpress/wp-content/$dir/$f"  &&  -d "$f" ]] || [ "$dir" = mu-plugins ]; then
+    mount_path="/usr/src/wordpress/wp-content/$dir/$(basename "$f")"
+    mount_path_parent_dir=$(dirname "$mount_path")
 
-      # cover case where parent directory doesn't exist; i.e mu-plugins
-      if [ ! -d "/usr/src/wordpress/wp-content/$dir" ]; then
-        mkdir "/usr/src/wordpress/wp-content/$dir"
+    # for files that will be mounted to mu-plugins directory confirm that theres neither a file or directory already pre-existing
+    if [[ $dir = mu-plugins ]] && ! [[ -d "$mount_path" || -f "$mount_path" ]]; then
+
+     # cover case where parent directory doesn't exist; i.e mu-plugins
+      if [[ ! -d "$mount_path_parent_dir" ]]; then
+        mkdir "$mount_path_parent_dir"
       fi
 
-      ln -s "$f" "/usr/src/wordpress/wp-content/$dir";
+      echo "Linking $(basename "$f") to $mount_path_parent_dir"
+
+      ln -s "$f" "$mount_path_parent_dir";
+
+    elif [[ -d "$f" && ! -d "$mount_path" && ! "$dir" = mu-plugins ]]; then
+
+      echo "Linking $(basename "$f") to $mount_path_parent_dir"
+
+      ln -s "$f" "$mount_path_parent_dir";
     fi
   done;
 done
