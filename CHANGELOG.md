@@ -1,3 +1,10 @@
+## [0.0.8](https://github.com/eokoneyo/wpnd/compare/v0.0.7...v0.0.8) (2022-07-02)
+
+
+### Bug Fixes
+
+* fix documentation pertaining to actual cli usage ([de59472](https://github.com/eokoneyo/wpnd/commit/de59472647e0a755a674f49252872e8567731458))
+
 ## [0.0.7](https://github.com/eokoneyo/wpnd/compare/v0.0.6...v0.0.7) (2022-07-01)
 
 
