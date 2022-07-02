@@ -31,20 +31,20 @@
           "type": "boolean"
         },
         "db": {
-          "title": "",
+          "title": "db connection config",
           "type": "object",
           "description": "",
           "properties": {
             "name": {
-              "description": "",
+              "description": "Specify name of database to use",
               "type": "string"
             },
             "user": {
-              "description": "",
+              "description": "specify database user",
               "type": "string"
             },
             "password": {
-              "description": "",
+              "description": "specify database password",
               "type": "string"
             }
           }
