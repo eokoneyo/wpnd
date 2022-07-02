@@ -111,9 +111,7 @@ program
 
 program
   .command('shell')
-  .description(
-    'opens up a interactive tty terminal to the currently running wpnd app'
-  )
+  .description('opens up a interactive tty to the currently running wpnd app')
   .addOption(programConfigFile)
   .action(async (options) => {
     const parsedConfig = await extractValuesFromConfigFile(options.config);
