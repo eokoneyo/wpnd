@@ -26,14 +26,14 @@ An alternative path to the config file might could be provided with `--config <f
 
 ### Config Options
 
-| Property                     | Description                                                                       | Type      | Default     |     |
-|------------------------------|-----------------------------------------------------------------------------------|-----------|-------------|-----|
-| name                         | Name of container that will be created for project                                | `string`  |             |     |
-| distDir                      | Name of custom directory where artifact required for wpnd will be stored          | `string`  | .wpnd       |     |
-| srcDir                       | Name of directory contain the theme/plugins we intend to develop                  | `string`  | src         |     |
-| environment.port             | value at which the wordpress installation should be available at                  | `string`  | 8085        |     |
-| environment.db.name          | specifies the name of the database to use, if it doesn't exist it will be created | `string`  | exampledb   |     |
-| environment.db.user          | specifies the user that should be attached to said database                       | `string`  | exampleuser |     |
-| environment.db.password      | provides the password to the database in question                                 | `string`  | examplepass |     |
-| environment.skipDockerCheck  | When enabled, a check is performed to ensure the user actually has docker         | `boolean` | false       |     |
-| environment.rebuildOnStart   | Determines if the docker image in use should be rebuilt on every start            | `boolean` | false       |     |
+| Property                     | Description                                                                       | Type      | Default     |
+|------------------------------|-----------------------------------------------------------------------------------|-----------|-------------|
+| name                         | Name of container that will be created for project                                | `string`  |             |
+| distDir                      | Name of custom directory where artifact required for wpnd will be stored          | `string`  | .wpnd       |
+| srcDir                       | Name of directory contain the theme/plugins we intend to develop                  | `string`  | src         |
+| environment.port             | value at which the wordpress installation should be available at                  | `string`  | 8085        |
+| environment.db.name          | specifies the name of the database to use, if it doesn't exist it will be created | `string`  | exampledb   |
+| environment.db.user          | specifies the user that should be attached to said database                       | `string`  | exampleuser |
+| environment.db.password      | provides the password to the database in question                                 | `string`  | examplepass |
+| environment.skipDockerCheck  | When enabled, a check is performed to ensure the user actually has docker         | `boolean` | false       |
+| environment.rebuildOnStart   | Determines if the docker image in use should be rebuilt on every start            | `boolean` | false       |
