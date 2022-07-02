@@ -41,7 +41,6 @@
     "commander": "^9.2.0",
     "cpy": "^9.0.1",
     "execa": "^6.1.0",
-    "inquirer": "^8.2.4",
     "listr": "^0.14.3",
     "lodash.merge": "^4.6.2",
     "schema-utils": "^4.0.0",
