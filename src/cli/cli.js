@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import Listr from 'listr';
 import which from 'which';
 import { execa } from 'execa';
-import { Command } from 'commander';
+import { Command, Option } from 'commander';
 import { createRequire } from 'module';
 
 import programConfigFile from './options.js';
@@ -111,8 +111,18 @@ program
 
 program
   .command('shell')
-  .description('opens up a interactive tty to the currently running wpnd app')
+  .description(
+    'opens up a interactive tty to the services the currently running wpnd app is composed of'
+  )
   .addOption(programConfigFile)
+  .addOption(
+    new Option(
+      '-s, --service <type>',
+      'service for a which shell access should be created to'
+    )
+      .choices(['wordpress', 'db'])
+      .default('wordpress')
+  )
   .action(async (options) => {
     const parsedConfig = await extractValuesFromConfigFile(options.config);
 
@@ -122,7 +132,7 @@ program
         'compose',
         ['--project-name', parsedConfig.name],
         'exec',
-        'wordpress',
+        options.service,
         'bash',
       ].flat(),
       {
