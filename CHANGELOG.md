@@ -1,3 +1,10 @@
+# [0.1.0](https://github.com/eokoneyo/wpnd/compare/v0.0.8...v0.1.0) (2022-07-20)
+
+
+### Features
+
+* add support to access db shell environment ([7e472c3](https://github.com/eokoneyo/wpnd/commit/7e472c39370190ece57e02a7e145eeb4cbc0acb2))
+
 ## [0.0.8](https://github.com/eokoneyo/wpnd/compare/v0.0.7...v0.0.8) (2022-07-02)
 
 
