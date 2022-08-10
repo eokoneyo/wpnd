@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/eokoneyo/wpnd/compare/v0.1.0...v0.2.0) (2022-08-10)
+
+
+### Features
+
+* add support so db shell is running mysql terminal ([4a2480f](https://github.com/eokoneyo/wpnd/commit/4a2480ff9fdfda0e8ac08698a6c902d5c9c80643))
+
 # [0.1.0](https://github.com/eokoneyo/wpnd/compare/v0.0.8...v0.1.0) (2022-07-20)
 
 
