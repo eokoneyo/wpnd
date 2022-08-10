@@ -133,7 +133,14 @@ program
         ['--project-name', parsedConfig.name],
         'exec',
         options.service,
-        'bash',
+        ['bash'].concat(
+          options.service === 'db'
+            ? [
+                '-c',
+                `mysql -u${parsedConfig.environment.db.user} -p${parsedConfig.environment.db.password}`,
+              ]
+            : []
+        ),
       ].flat(),
       {
         stdio: 'inherit',

@@ -4,6 +4,7 @@
   "scripts": {
     "start": "../bin/index.js start",
     "destroy": "../bin/index.js destroy",
-    "shell": "../bin/index.js shell"
+    "shell:wordpress": "../bin/index.js shell",
+    "shell:db": "../bin/index.js shell -s db"
   }
 }
