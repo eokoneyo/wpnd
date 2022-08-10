@@ -59,10 +59,19 @@ program
   .action(async (options) => {
     const parsedConfig = await extractValuesFromConfigFile(options.config);
 
-    await cpy(
-      path.join(__dirname, '../templates/*'),
-      path.join(process.cwd(), parsedConfig.distDir)
-    );
+    await Promise.allSettled([
+      cpy(
+        path.join(__dirname, '../templates/core/*'),
+        path.join(process.cwd(), parsedConfig.distDir)
+      ),
+      cpy(
+        path.join(__dirname, '../templates/*.*'),
+        path.join(process.cwd(), parsedConfig.srcDir),
+        {
+          overwrite: false, // don't overwrite so users retain their modification to starter config files
+        }
+      ),
+    ]);
 
     const runner = execa(
       'docker',

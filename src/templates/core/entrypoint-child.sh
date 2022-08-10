@@ -1,6 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
+# Explicitly define the files that get symlinked from wpnd directory
+# into wordpress installation directory
+
 for dir in themes plugins mu-plugins
 do
   for f in "/usr/src/wpnd/$dir"/*;
