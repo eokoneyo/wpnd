@@ -10,8 +10,10 @@
     }
   ],
   "extra": {
-    "wp-content/plugins/{$name}/": [
-      "type:wordpress-plugin"
-    ]
+    "installer-paths": {
+      "plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ]
+    }
   }
 }
