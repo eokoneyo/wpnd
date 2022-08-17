@@ -12,5 +12,5 @@ jobs:
         run: yarn install --immutable
       - name: Lint
         run: yarn lint
-#      - name: Test
-#        run: yarn test
+      - name: Test
+        run: yarn test
