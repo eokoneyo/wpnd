@@ -2,13 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const { Volume } = require('memfs');
 const { patchRequire } = require('fs-monkey');
-const {execa} = require("execa");
+// const {execa} = require("execa");
 
-const executeEntrypointChildScript = () => {
-    // const entrypointChildScript = fs.read(path.resolve(__dirname, '../templates/core/entrypoint-child.sh'));
-
-    execa(path.resolve(__dirname, '../templates/core/entrypoint-child.sh'))
-}
+// const executeEntrypointChildScript = () => {
+//     // const entrypointChildScript = fs.read(path.resolve(__dirname, '../templates/core/entrypoint-child.sh'));
+//
+//     execa(path.resolve(__dirname, '../templates/core/entrypoint-child.sh'))
+// }
 
 describe('entrypoint child script', () => {
   beforeEach(() => {
