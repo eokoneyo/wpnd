@@ -29,7 +29,7 @@ jobs:
         working_directory: ./playground
         run: yarn start
       - name: Test container
-        run: container-structure-test test --config config-cst.yaml --image random808443
+        run: container-structure-test test --config config-cst.yaml --image $(grep name ./playground/wpnd.config.json | cut -d'"' -f4)
       - name: Destroy Container
         working_directory: ./playground
         run: yarn destroy
