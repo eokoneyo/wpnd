@@ -38,6 +38,12 @@ program
   .command('start')
   .description('Starts a project development environment')
   .addOption(programConfigFile)
+  .addOption(
+    new Option(
+      '-d, --detached',
+      'run container in standard docker compose detached mode'
+    )
+  )
   .hook('preAction', (command) => {
     const tasks = new Listr([
       {
@@ -81,6 +87,7 @@ program
         ['--file', path.join(process.cwd(), parsedConfig.distDir, 'stack.yml')],
         'up',
         [parsedConfig.environment.rebuildOnStart ? '--build' : null],
+        [options.detached ? '-d' : null],
       ]
         .flat()
         .filter(Boolean),
