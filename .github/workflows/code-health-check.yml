@@ -30,11 +30,12 @@ jobs:
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Install Container Structure Test Binary
-        run: |
-          curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64 \
-          && chmod +x container-structure-test-linux-amd64 \
-          && mkdir -p $HOME/bin && export PATH=$PATH:$HOME/bin \
-          && mv container-structure-test-linux-amd64 $HOME/bin/container-structure-test
+        run: >
+          curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
+          && chmod +x container-structure-test-linux-amd64
+          && mkdir -p $HOME/.local/bin
+          && mv container-structure-test-linux-amd64 $HOME/.local/bin/container-structure-test
+          && echo "$HOME/.local/bin/container-structure-test" >> $GITHUB_PATH
       - name: Install Project Dependencies
         run: yarn install --immutable
       - name: Build and start image
@@ -44,4 +45,4 @@ jobs:
         run: yarn test:container
       - name: Teardown created container
         working-directory: playground
-        run: yarn destory
+        run: yarn destroy
