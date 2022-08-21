@@ -2,13 +2,13 @@ name: publish package
 
 on:
   workflow_run:
-    workflows: ['integration-quality-check']
+    workflows: ['code-health-check']
     branches: ['main']
     types:
       - completed
 
 jobs:
-  on-integration-quality-check-success:
+  on-code-check-success:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
@@ -29,8 +29,8 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  on-integration-quality-check-failure:
+  on-code-check-failure:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
-      - run: echo 'The triggering package publish workflow failed'
+      - run: echo 'The triggering workflow failed'
