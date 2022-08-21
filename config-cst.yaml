@@ -1,0 +1,11 @@
+schemaVersion: 2.0.0
+
+commandTests:
+  - name: "Composer is bundled with image"
+    command: "which"
+    args: ["composer"]
+    expectedOutput: ["/usr/bin/composer"]
+
+metadataTest:
+  cmd: ["apache2-foreground"]
+  entrypoint: ["entrypoint-child.sh"]
