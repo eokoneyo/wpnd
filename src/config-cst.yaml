@@ -1,3 +1,6 @@
+# Validation definiton for container wpnd cli will generate
+# using container-structure-test (https://github.com/GoogleContainerTools/container-structure-test)
+
 schemaVersion: 2.0.0
 
 commandTests:
