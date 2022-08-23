@@ -7,10 +7,10 @@ module.exports = {
     '\\.js': 'jest-esm-transformer'
   },
   testPathIgnorePatterns: [
-    '<rootDir>/src/__tests__/setup.cjs',
-    '<rootDir>/src/__tests__/__mocks__',
-    '<rootDir>/src/__tests__/helpers',
+    '<rootDir>/__tests__/setup.cjs',
+    '<rootDir>/__tests__/__mocks__',
+    '<rootDir>/__tests__/helpers',
   ],
   testEnvironment: 'node',
-  setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.cjs'],
+  setupFilesAfterEnv: ['<rootDir>/__tests__/setup.cjs'],
 };

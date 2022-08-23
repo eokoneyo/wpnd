@@ -13,7 +13,7 @@
     "prepare": "husky install",
     "lint": "eslint .",
     "test:container": "container-structure-test test --config src/config-cst.yaml --image $(grep name ./playground/wpnd.config.json | cut -d'\"' -f4)",
-    "test:unit": "jest --config jest.config.cjs"
+    "test:unit": "jest --config jest.config.cjs --passWithNoTests"
   },
   "publishConfig": {
     "access": "public"
