@@ -9,6 +9,11 @@ commandTests:
     args: ["composer"]
     expectedOutput: ["/usr/bin/composer"]
 
+fileExistenceTests:
+  - name: "Wordpress staging directory exist"
+    path: "/usr/src/wordpress/wp-content"
+    shouldExist: true
+
 metadataTest:
-  cmd: ["apache2-foreground"]
+  volumes: ["/var/www/html"]
   entrypoint: ["entrypoint-child.sh"]

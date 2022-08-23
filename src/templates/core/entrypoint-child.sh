@@ -38,4 +38,6 @@ for record in "/usr/src/wpnd"/*; do
   fi
 done
 
-exec docker-entrypoint.sh "$@"
+# pass along command to start container,
+# see https://github.com/docker-library/wordpress/blob/master/Dockerfile.template#L261 for possible values
+exec docker-entrypoint.sh "apache2-foreground"
