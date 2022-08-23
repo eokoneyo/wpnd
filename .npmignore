@@ -12,3 +12,5 @@ playground
 /commitlint.config.cjs
 /.releaserc
 /src/__tests__/
+**/*.test.js
+**/*.test.cjs
