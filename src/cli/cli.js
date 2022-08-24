@@ -1,5 +1,6 @@
 import * as url from 'url';
 import path from 'path';
+import { writeFile } from 'fs/promises';
 import cpy from 'cpy';
 import chalk from 'chalk';
 import Listr from 'listr';
@@ -9,6 +10,7 @@ import { Command, Option } from 'commander';
 import { createRequire } from 'module';
 
 import programConfigFile from './options.js';
+import generateComposerConfig from './utils/generate-composer-config.js';
 import exposeConfigGetterForProgram from './config/index.js';
 
 const require = createRequire(import.meta.url);
@@ -17,7 +19,7 @@ const require = createRequire(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 // eslint-disable-next-line import/no-dynamic-require
-const pkg = require(path.resolve(__dirname, '../../package.json'));
+const pkg = require(path.join(__dirname, '../../package.json'));
 
 const program = new Command();
 
@@ -70,12 +72,9 @@ program
         path.join(__dirname, '../templates/core/*'),
         path.join(process.cwd(), parsedConfig.distDir)
       ),
-      cpy(
-        path.join(__dirname, '../templates/*.*'),
-        path.join(process.cwd(), parsedConfig.srcDir),
-        {
-          overwrite: false, // don't overwrite so users retain their modification to starter config files
-        }
+      writeFile(
+        path.join(process.cwd(), parsedConfig.distDir, 'composer.json'),
+        generateComposerConfig(require, parsedConfig.wpackagist)
       ),
     ]);
 

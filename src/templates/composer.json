@@ -12,10 +12,10 @@
   "require": {},
   "extra": {
     "installer-paths": {
-      "plugins/{$name}/": [
+      "/usr/src/wordpress/wp-content/plugins/{$name}/": [
         "type:wordpress-plugin"
       ],
-      "themes/{$name}/": [
+      "/usr/src/wordpress/wp-content/themes/{$name}/": [
         "type:wordpress-theme"
       ]
     }

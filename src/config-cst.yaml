@@ -13,6 +13,9 @@ fileExistenceTests:
   - name: "Wordpress staging directory exist"
     path: "/usr/src/wordpress/wp-content"
     shouldExist: true
+  - name: "Composer file for wpackagist bundled theme and plugins exist"
+    path: "/var/www/html/composer.json"
+    shouldExist: true
 
 metadataTest:
   volumes: ["/var/www/html"]

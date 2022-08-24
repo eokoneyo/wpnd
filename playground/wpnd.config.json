@@ -3,5 +3,8 @@
   "srcDir": "wp-content",
   "environment": {
     "rebuildOnStart": true
+  },
+  "wpackagist": {
+    "wpackagist-plugin/jetpack": "*"
   }
 }
