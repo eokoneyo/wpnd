@@ -1,0 +1,22 @@
+# Validation definiton for container wpnd cli will generate
+# using container-structure-test (https://github.com/GoogleContainerTools/container-structure-test)
+
+schemaVersion: 2.0.0
+
+commandTests:
+  - name: "Composer is bundled with image"
+    command: "which"
+    args: ["composer"]
+    expectedOutput: ["/usr/bin/composer"]
+
+fileExistenceTests:
+  - name: "Wordpress staging directory exist"
+    path: "/usr/src/wordpress/wp-content"
+    shouldExist: true
+  - name: "Composer file for wpackagist bundled theme and plugins exist"
+    path: "/var/www/html/composer.json"
+    shouldExist: true
+
+metadataTest:
+  volumes: ["/var/www/html"]
+  entrypoint: ["entrypoint-child.sh"]

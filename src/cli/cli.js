@@ -7,8 +7,10 @@ import which from 'which';
 import { execa } from 'execa';
 import { Command, Option } from 'commander';
 import { createRequire } from 'module';
+import { writeJsonFile } from 'write-json-file';
 
 import programConfigFile from './options.js';
+import generateComposerConfig from './utils/generate-composer-config.js';
 import exposeConfigGetterForProgram from './config/index.js';
 
 const require = createRequire(import.meta.url);
@@ -17,7 +19,7 @@ const require = createRequire(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 // eslint-disable-next-line import/no-dynamic-require
-const pkg = require(path.resolve(__dirname, '../../package.json'));
+const pkg = require(path.join(__dirname, '../../package.json'));
 
 const program = new Command();
 
@@ -38,6 +40,12 @@ program
   .command('start')
   .description('Starts a project development environment')
   .addOption(programConfigFile)
+  .addOption(
+    new Option(
+      '-d, --detached',
+      'run container in standard docker compose detached mode'
+    )
+  )
   .hook('preAction', (command) => {
     const tasks = new Listr([
       {
@@ -59,10 +67,19 @@ program
   .action(async (options) => {
     const parsedConfig = await extractValuesFromConfigFile(options.config);
 
-    await cpy(
-      path.join(__dirname, '../templates/*'),
-      path.join(process.cwd(), parsedConfig.distDir)
-    );
+    await Promise.allSettled([
+      cpy(
+        path.join(__dirname, '../templates/core/*'),
+        path.join(process.cwd(), parsedConfig.distDir)
+      ),
+      writeJsonFile(
+        path.join(process.cwd(), parsedConfig.distDir, 'composer.json'),
+        generateComposerConfig(require, parsedConfig.wpackagist),
+        {
+          indent: 2,
+        }
+      ),
+    ]);
 
     const runner = execa(
       'docker',
@@ -72,6 +89,7 @@ program
         ['--file', path.join(process.cwd(), parsedConfig.distDir, 'stack.yml')],
         'up',
         [parsedConfig.environment.rebuildOnStart ? '--build' : null],
+        [options.detached ? '-d' : null],
       ]
         .flat()
         .filter(Boolean),

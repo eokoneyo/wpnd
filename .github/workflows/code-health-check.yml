@@ -6,11 +6,43 @@ jobs:
   code-health-check:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install Dependencies
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+          node-version: '14.x'
+      - name: Install Project Dependencies
         run: yarn install --immutable
       - name: Lint
         run: yarn lint
-#      - name: Test
-#        run: yarn test
+      - name: Unit Test
+        run: yarn test:unit
+
+  verify-container:
+    needs: code-health-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+          node-version: '14.x'
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Install Container Structure Test Binary
+        run: >
+          curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
+          && chmod +x container-structure-test-linux-amd64
+          && mkdir -p $HOME/.local/bin
+          && mv container-structure-test-linux-amd64 $HOME/.local/bin/container-structure-test
+          && echo "$HOME/.local/bin/container-structure-test" >> $GITHUB_PATH
+      - name: Install Project Dependencies
+        run: yarn install --immutable
+      - name: Build and start image
+        working-directory: playground
+        run: yarn start -d
+      - name: Test Generated Container
+        run: yarn test:container
+      - name: Teardown created container
+        working-directory: playground
+        run: yarn destroy

@@ -1,12 +1,15 @@
 {
   "root": true,
   "env": {
-    "node": true
+    "node": true,
+    "jest": true,
+    "jest/globals": true
   },
   "parserOptions": {
     "ecmaVersion": 2022,
     "sourceType": "module"
   },
+  "plugins": ["jest"],
   "extends": ["eslint:recommended", "airbnb-base", "prettier"],
   "rules": {
     "import/extensions": ["error", { "js": "always", "json": "always" }]

@@ -11,3 +11,7 @@ playground
 /.lintstagedrc
 /commitlint.config.cjs
 /.releaserc
+__tests__/
+**/*.test.js
+**/*.test.cjs
+/src/config-cst.yaml
