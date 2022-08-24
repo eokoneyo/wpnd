@@ -10,14 +10,10 @@ const generateComposerConfig = (requireFn, userDefinedPackages) => {
     path.join(__dirname, '../../templates/composer.json')
   );
 
-  return JSON.stringify(
-    {
-      ...composerJsonTemplate,
-      require: userDefinedPackages,
-    },
-    null,
-    2
-  );
+  return {
+    ...composerJsonTemplate,
+    require: userDefinedPackages,
+  };
 };
 
 export default generateComposerConfig;

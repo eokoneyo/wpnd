@@ -1,6 +1,5 @@
 import * as url from 'url';
 import path from 'path';
-import { writeFile } from 'fs/promises';
 import cpy from 'cpy';
 import chalk from 'chalk';
 import Listr from 'listr';
@@ -8,6 +7,7 @@ import which from 'which';
 import { execa } from 'execa';
 import { Command, Option } from 'commander';
 import { createRequire } from 'module';
+import { writeJsonFile } from 'write-json-file';
 
 import programConfigFile from './options.js';
 import generateComposerConfig from './utils/generate-composer-config.js';
@@ -72,9 +72,12 @@ program
         path.join(__dirname, '../templates/core/*'),
         path.join(process.cwd(), parsedConfig.distDir)
       ),
-      writeFile(
+      writeJsonFile(
         path.join(process.cwd(), parsedConfig.distDir, 'composer.json'),
-        generateComposerConfig(require, parsedConfig.wpackagist)
+        generateComposerConfig(require, parsedConfig.wpackagist),
+        {
+          indent: 2,
+        }
       ),
     ]);
 
