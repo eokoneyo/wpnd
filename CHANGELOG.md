@@ -1,3 +1,19 @@
+# [0.3.0](https://github.com/eokoneyo/wpnd/compare/v0.2.0...v0.3.0) (2022-08-24)
+
+
+### Bug Fixes
+
+* comment out unncessary test setup ([6c46d18](https://github.com/eokoneyo/wpnd/commit/6c46d180b076246658f37b3134a883297f318456))
+* improve script to symlink files from wpnd directory into docker wp-content directory ([786839f](https://github.com/eokoneyo/wpnd/commit/786839f71b6b3a5be6c0666612e864e29d33c239))
+* modify entrypoint script file to accomodate work for composer ([d0bd8ec](https://github.com/eokoneyo/wpnd/commit/d0bd8ec3c7421474fa5c22d118f7aaa44ac664bb))
+* update template composer file with defaults to support custom installer paths ([76d38c1](https://github.com/eokoneyo/wpnd/commit/76d38c1eb09216ccf25692eda0ecf03389e71949))
+
+
+### Features
+
+* add composer support, also modify cli template files to accomodate composer related config ([8b63553](https://github.com/eokoneyo/wpnd/commit/8b635530faf7b31d1a3bd2cde1258d5fff7e66f0))
+* add support to pre-install themes and plugins from wordpress.org using wpackagist ([5fd44c8](https://github.com/eokoneyo/wpnd/commit/5fd44c8010e8e0e7adfd4735dca397099f25cd8f))
+
 # [0.2.0](https://github.com/eokoneyo/wpnd/compare/v0.1.0...v0.2.0) (2022-08-10)
 
 
