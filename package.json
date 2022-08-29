@@ -8,11 +8,11 @@
     "url": "https://github.com/eokoneyo/wpnd"
   },
   "license": "MIT",
-  "bin": "bin/index.js",
+  "bin": "src/bin/index.js",
   "scripts": {
     "prepare": "husky install",
     "lint": "eslint .",
-    "test:container": "container-structure-test test --config src/config-cst.yaml --image $(grep name ./playground/wpnd.config.json | cut -d'\"' -f4)",
+    "test:container": "container-structure-test test --config __tests__/config-cst.yaml --image $(grep name ./playground/wpnd.config.json | cut -d'\"' -f4)",
     "test:unit": "jest --config jest.config.cjs --passWithNoTests"
   },
   "publishConfig": {
