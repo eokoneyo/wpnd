@@ -23,7 +23,8 @@ const pkg = require(path.join(__dirname, '../../package.json'));
 
 const program = new Command();
 
-const extractValuesFromConfigFile = exposeConfigGetterForProgram(program);
+const extractValuesFromConfigFile = (configFilePath) =>
+  exposeConfigGetterForProgram(configFilePath).catch(program.error);
 
 program
   .name('wpnd')

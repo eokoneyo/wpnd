@@ -7,6 +7,13 @@ import merge from 'lodash.merge';
 
 const require = createRequire(import.meta.url);
 
+class ConfigResolutionError extends Error {
+  constructor(message) {
+    super(message); // (1)
+    this.name = 'ConfigResolutionError'; // (2)
+  }
+}
+
 const defaultConfigOptions = {
   srcDir: 'src',
   distDir: '.wpnd', // cannot leave project directory
@@ -22,32 +29,50 @@ const defaultConfigOptions = {
   },
 };
 
-const exposeConfigGetterForProgram =
-  (program) => async (configFilePathProvided) => {
+const exposeConfigGetterForProgram = (
+  configFilePathProvided,
+  { acceptDefault } = { acceptDefault: true }
+) =>
+  new Promise((resolve, reject) => {
+    if (acceptDefault && !configFilePathProvided) {
+      resolve(defaultConfigOptions);
+    }
+
+    if (!/.json$/.test(configFilePathProvided)) {
+      reject(
+        new ConfigResolutionError('Specified Unsupported config file extension')
+      );
+    }
+
+    const isConfigPathAbsolute = /^\//.test(configFilePathProvided);
+
     // eslint-disable-next-line no-underscore-dangle
-    let _configPath = configFilePathProvided;
+    const _configPath = path.join.apply(
+      null,
+      [
+        isConfigPathAbsolute ? null : process.cwd(),
+        configFilePathProvided,
+      ].filter(Boolean)
+    );
 
-    if (!/.json$/.test(_configPath)) {
-      program.error('Specified Unsupported config file extension');
-    }
+    fs.access(_configPath, FSConstants.R_OK)
+      .then(() => {
+        const configSchema = require('./config-schema.json');
 
-    if (!/^\//.test(_configPath)) {
-      _configPath = path.join(process.cwd(), configFilePathProvided);
-    }
+        // eslint-disable-next-line import/no-dynamic-require
+        const parsedConfig = require(_configPath);
 
-    try {
-      await fs.access(_configPath, FSConstants.R_OK);
-    } catch {
-      program.error('Unable to find config file at path specified');
-    }
+        validate(configSchema, parsedConfig);
 
-    const configSchema = require('./config-schema.json');
-    // eslint-disable-next-line import/no-dynamic-require
-    const parsedConfig = require(_configPath);
-
-    validate(configSchema, parsedConfig);
-
-    return merge(defaultConfigOptions, parsedConfig);
-  };
+        return resolve(merge(defaultConfigOptions, parsedConfig));
+      })
+      .catch(() =>
+        reject(
+          new ConfigResolutionError(
+            'Unable to find config file at path specified'
+          )
+        )
+      );
+  });
 
 export default exposeConfigGetterForProgram;
