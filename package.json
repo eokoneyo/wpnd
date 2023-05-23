@@ -12,7 +12,7 @@
   "scripts": {
     "prepare": "husky install",
     "lint": "eslint .",
-    "test:container": "container-structure-test test --config __tests__/config-cst.yaml --image $(grep name ./playground/wpnd.config.json | cut -d'\"' -f4)",
+    "test:container": "container-structure-test test --config src/__tests__/config-cst.yaml --image $(grep name ./playground/wpnd.config.json | cut -d'\"' -f4)",
     "test:unit": "yarn node --experimental-vm-modules $(yarn bin jest) --config jest.config.cjs"
   },
   "publishConfig": {
