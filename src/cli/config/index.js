@@ -40,10 +40,16 @@ const exposeConfigGetterForProgram = (
   { acceptDefault } = { acceptDefault: true }
 ) =>
   new Promise((resolve, reject) => {
+    if (!configFilePathProvided && acceptDefault) {
+      resolve(defaultConfigOptions);
+    }
+
+    if (!configFilePathProvided && !acceptDefault) {
+      reject(new ConfigResolutionError('Missing required config file'));
+    }
+
     if (!/.json$/.test(configFilePathProvided)) {
-      reject(
-        new ConfigResolutionError('Specified Unsupported config file extension')
-      );
+      reject(new ConfigResolutionError('Unsupported config file extension'));
     }
 
     const isConfigPathAbsolute = /^\//.test(configFilePathProvided);
@@ -69,15 +75,11 @@ const exposeConfigGetterForProgram = (
         return resolve(merge(defaultConfigOptions, parsedConfig));
       })
       .catch(() => {
-        if (!acceptDefault) {
-          reject(
-            new ConfigResolutionError(
-              'Unable to find config file at path specified'
-            )
-          );
-        }
-
-        resolve(defaultConfigOptions);
+        reject(
+          new ConfigResolutionError(
+            'Unable to find config file at path specified'
+          )
+        );
       });
   });
 
