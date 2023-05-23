@@ -1,3 +1,16 @@
+# [0.4.0](https://github.com/eokoneyo/wpnd/compare/v0.3.0...v0.4.0) (2023-05-23)
+
+
+### Bug Fixes
+
+* resolve issue with getting config ([8f8bd37](https://github.com/eokoneyo/wpnd/commit/8f8bd37ea1bae9a140bc08740fd42d6b5facb234))
+
+
+### Features
+
+* rework how config values for program are resolved ([aa2d398](https://github.com/eokoneyo/wpnd/commit/aa2d3982a8d1c5a59fdfab7c7f79811a68168510))
+* split commands into self containing files ([b72db5e](https://github.com/eokoneyo/wpnd/commit/b72db5e89589b74c76166a06dd91bf3e8a5d0e5f))
+
 # [0.3.0](https://github.com/eokoneyo/wpnd/compare/v0.2.0...v0.3.0) (2022-08-24)
 
 
