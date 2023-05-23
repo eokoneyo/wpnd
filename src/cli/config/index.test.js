@@ -1,8 +1,10 @@
 import * as fs from 'fs';
+
 import { Volume } from 'memfs';
 import { ufs } from 'unionfs';
 import { patchFs } from 'fs-monkey';
 import { jest, expect, it, describe, beforeEach } from '@jest/globals';
+
 import exposeConfigGetterForProgram from './index.js';
 
 describe('exposeConfigGetterForProgram', () => {
