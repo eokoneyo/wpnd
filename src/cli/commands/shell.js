@@ -1,6 +1,8 @@
+import path from 'path';
+
 import { execa } from 'execa';
 import { Command, Option } from 'commander';
-import path from 'path';
+
 import { programConfigFile } from '../options.js';
 import exposeConfigGetterForProgram from '../config/index.js';
 

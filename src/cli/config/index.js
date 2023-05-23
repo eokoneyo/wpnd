@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs/promises';
 import { constants as FSConstants } from 'fs';
 import { createRequire } from 'module';
+
 import { validate } from 'schema-utils';
 import merge from 'lodash.merge';
 

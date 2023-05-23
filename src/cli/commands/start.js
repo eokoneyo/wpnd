@@ -9,6 +9,7 @@ import { execa } from 'execa';
 import { Command, Option } from 'commander';
 import { writeJsonFile } from 'write-json-file';
 import randomWords from 'random-words';
+
 import exposeConfigGetterForProgram from '../config/index.js';
 import { programConfigFile, showLogs } from '../options.js';
 import generateComposerConfig from '../utils/generate-composer-config.js';

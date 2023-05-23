@@ -1,8 +1,10 @@
+import path from 'path';
+
 import { Command } from 'commander';
 import { execa } from 'execa';
-import path from 'path';
+
 import exposeConfigGetterForProgram from '../config/index.js';
-import { programConfigFile, showLogs } from '../options.js';
+import { programConfigFile } from '../options.js';
 
 const buildDestroyCommand = () => {
   const destroy = new Command('destroy');
@@ -10,7 +12,6 @@ const buildDestroyCommand = () => {
   destroy
     .description('removes the created image for the configuration specified')
     .addOption(programConfigFile)
-    .addOption(showLogs)
     .action(async (options) => {
       const parsedConfig = await exposeConfigGetterForProgram(
         options.config
