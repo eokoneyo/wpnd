@@ -14,9 +14,6 @@ import exposeConfigGetterForProgram from '../config/index.js';
 import { programConfigFile, showLogs } from '../options.js';
 import generateComposerConfig from '../utils/generate-composer-config.js';
 
-// eslint-disable-next-line import/no-dynamic-require,no-underscore-dangle
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
-
 const buildStartCommand = () => {
   const start = new Command('start');
 
@@ -55,7 +52,10 @@ const buildStartCommand = () => {
 
       await Promise.allSettled([
         cpy(
-          path.join(__dirname, '../../templates/core/*'),
+          path.join(
+            path.dirname(url.fileURLToPath(import.meta.url)),
+            '../../templates/core/*'
+          ),
           path.join(process.cwd(), parsedConfig.distDir)
         ),
         writeJsonFile(
