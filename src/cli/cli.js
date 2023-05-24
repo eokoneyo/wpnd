@@ -12,7 +12,7 @@ import buildShellCommand from './commands/shell.js';
 const require = createRequire(import.meta.url);
 
 // eslint-disable-next-line import/no-dynamic-require,no-underscore-dangle
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 // eslint-disable-next-line import/no-dynamic-require
 const pkg = require(path.join(__dirname, '../../package.json'));
