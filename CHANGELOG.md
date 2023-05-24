@@ -1,3 +1,10 @@
+# [0.5.0](https://github.com/eokoneyo/wpnd/compare/v0.4.0...v0.5.0) (2023-05-24)
+
+
+### Features
+
+* fix issue with start command using whilst using npx ([43026de](https://github.com/eokoneyo/wpnd/commit/43026de7d9bb4cf7475ce1e11864c03be09f8d30))
+
 # [0.4.0](https://github.com/eokoneyo/wpnd/compare/v0.3.0...v0.4.0) (2023-05-23)
 
 
