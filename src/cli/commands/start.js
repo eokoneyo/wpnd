@@ -10,16 +10,17 @@ import { Command, Option } from 'commander';
 import { writeJsonFile } from 'write-json-file';
 import randomWords from 'random-words';
 
-import exposeConfigGetterForProgram from '../config/index.js';
-import { programConfigFile, showLogs } from '../options.js';
 import generateComposerConfig from '../utils/generate-composer-config.js';
+
+import programConfig from './options/config/index.js';
+import showLogs from './options/logs.js';
 
 const buildStartCommand = () => {
   const start = new Command('start');
 
   start
     .description('Starts a project development environment')
-    .addOption(programConfigFile)
+    .addOption(programConfig)
     .addOption(showLogs)
     .addOption(
       new Option(
@@ -45,11 +46,7 @@ const buildStartCommand = () => {
         start.error(err.message);
       });
     })
-    .action(async (options) => {
-      const parsedConfig = await exposeConfigGetterForProgram(
-        options.config
-      ).catch((error) => start.error(error.message));
-
+    .action(async ({ config: parsedConfig, detached, verbose }) => {
       await Promise.allSettled([
         cpy(
           path.join(
@@ -81,8 +78,8 @@ const buildStartCommand = () => {
           ],
           'up',
           [parsedConfig.environment.rebuildOnStart ? '--build' : null],
-          [options.detached ? '-d' : null],
-          [options.verbose ? null : '--quiet-pull'],
+          [detached ? '-d' : null],
+          [verbose ? null : '--quiet-pull'],
         ]
           .flat()
           .filter(Boolean),

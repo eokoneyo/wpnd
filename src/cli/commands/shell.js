@@ -3,8 +3,7 @@ import path from 'path';
 import { execa } from 'execa';
 import { Command, Option } from 'commander';
 
-import { programConfigFile } from '../options.js';
-import exposeConfigGetterForProgram from '../config/index.js';
+import programConfig from './options/config/index.js';
 
 const buildShellCommand = () => {
   const shell = new Command('shell');
@@ -13,7 +12,7 @@ const buildShellCommand = () => {
     .description(
       'opens up a interactive tty to the services the currently running wpnd app is composed of'
     )
-    .addOption(programConfigFile)
+    .addOption(programConfig)
     .addOption(
       new Option(
         '-s, --service <type>',
@@ -22,11 +21,7 @@ const buildShellCommand = () => {
         .choices(['wordpress', 'db'])
         .default('wordpress')
     )
-    .action(async (options) => {
-      const parsedConfig = await exposeConfigGetterForProgram(
-        options.config
-      ).catch((error) => shell.error(error.message));
-
+    .action(async ({ config: parsedConfig, service }) => {
       execa(
         'docker',
         [
@@ -38,9 +33,9 @@ const buildShellCommand = () => {
                 path.join(process.cwd(), parsedConfig.distDir, 'stack.yml'),
               ],
           'exec',
-          options.service,
+          service,
           ['bash'].concat(
-            options.service === 'db'
+            service === 'db'
               ? [
                   '-c',
                   `mysql -u${parsedConfig.environment.db.user} -p${parsedConfig.environment.db.password}`,

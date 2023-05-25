@@ -3,20 +3,15 @@ import path from 'path';
 import { Command } from 'commander';
 import { execa } from 'execa';
 
-import exposeConfigGetterForProgram from '../config/index.js';
-import { programConfigFile } from '../options.js';
+import programConfig from './options/config/index.js';
 
 const buildDestroyCommand = () => {
   const destroy = new Command('destroy');
 
   destroy
     .description('removes the created image for the configuration specified')
-    .addOption(programConfigFile)
-    .action(async (options) => {
-      const parsedConfig = await exposeConfigGetterForProgram(
-        options.config
-      ).catch((error) => destroy.error(error.message));
-
+    .addOption(programConfig)
+    .action(async ({ config: parsedConfig }) => {
       const disposableRunner = execa(
         'docker',
         [
