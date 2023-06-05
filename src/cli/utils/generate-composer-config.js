@@ -1,7 +1,10 @@
-import { fileURLToPath } from 'url';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 
-const generateComposerConfig = (requireFn, userDefinedPackages) => {
+const requireFn = createRequire(import.meta.url);
+
+const generateComposerConfig = (userDefinedPackages) => {
   const composerJsonTemplate = requireFn(
     path.resolve(
       fileURLToPath(

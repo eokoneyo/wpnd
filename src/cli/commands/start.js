@@ -4,7 +4,6 @@ import { createRequire } from 'module';
 
 import cpy from 'cpy';
 import Listr from 'listr';
-import which from 'which';
 import { execa } from 'execa';
 import { Command, Option } from 'commander';
 import { writeJsonFile } from 'write-json-file';
@@ -14,6 +13,10 @@ import generateComposerConfig from '../utils/generate-composer-config.js';
 
 import programConfig from './options/config/index.js';
 import showLogs from './options/logs.js';
+
+const require = createRequire(import.meta.url);
+
+const nodeWhich = require('which');
 
 const buildStartCommand = () => {
   const start = new Command('start');
@@ -28,21 +31,16 @@ const buildStartCommand = () => {
         'run container in standard docker compose detached mode'
       )
     )
-    .hook('preAction', (command) => {
+    .hook('preAction', async (command) => {
       const tasks = new Listr([
         {
           title: 'Check Docker Status',
           enabled: command.opts().skipDockerCheck,
-          task: () =>
-            which('docker', (err) => {
-              if (err) {
-                throw new Error('Docker is not available in PATH');
-              }
-            }),
+          task: () => nodeWhich('docker'),
         },
       ]);
 
-      tasks.run().catch((err) => {
+      await tasks.run().catch((err) => {
         start.error(err.message);
       });
     })
@@ -57,10 +55,7 @@ const buildStartCommand = () => {
         ),
         writeJsonFile(
           path.join(process.cwd(), parsedConfig.distDir, 'composer.json'),
-          generateComposerConfig(
-            createRequire(import.meta.url),
-            parsedConfig.wpackagist
-          ),
+          generateComposerConfig(parsedConfig.wpackagist),
           {
             indent: 2,
           }

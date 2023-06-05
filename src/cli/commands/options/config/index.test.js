@@ -8,8 +8,6 @@ import { jest, expect, it, describe, beforeEach } from '@jest/globals';
 import { resolveConfigValue } from './index.js';
 
 describe('exposeConfigGetterForProgram', () => {
-  let mergedFS;
-
   beforeEach(() => {
     // mock files definition
     const virtualFiles = {
@@ -21,7 +19,8 @@ describe('exposeConfigGetterForProgram', () => {
 
     const vol = Volume.fromJSON(virtualFiles);
 
-    mergedFS = ufs.use({ ...fs }).use(vol);
+    const mergedFS = ufs.use({ ...fs }).use(vol);
+
     patchFs(mergedFS);
 
     Object.entries(virtualFiles).map(([filePath, fileContents]) =>
