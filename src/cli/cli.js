@@ -1,5 +1,5 @@
 import path from 'path';
-import * as url from 'url';
+import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 
 import chalk from 'chalk';
@@ -11,11 +11,10 @@ import buildShellCommand from './commands/shell.js';
 
 const require = createRequire(import.meta.url);
 
-// eslint-disable-next-line import/no-dynamic-require,no-underscore-dangle
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-
 // eslint-disable-next-line import/no-dynamic-require
-const pkg = require(path.join(__dirname, '../../package.json'));
+const pkg = require(path.resolve(
+  fileURLToPath(new URL('../../package.json', import.meta.url).href)
+));
 
 const program = new Command();
 
