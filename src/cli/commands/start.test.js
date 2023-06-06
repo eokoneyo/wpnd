@@ -3,6 +3,8 @@ import { createRequire } from 'node:module';
 import { Command } from 'commander';
 import { jest, expect, it, describe, afterEach } from '@jest/globals';
 
+import makeProgram from '../../__tests__/helpers/make-program.js';
+
 const require = createRequire(import.meta.url);
 
 const which = require('which');
@@ -27,12 +29,9 @@ await describe('start command', () => {
       Promise.reject(new Error('docker not found'))
     );
 
-    const program = new Command()
-      .configureOutput({
-        writeErr: jest.fn(),
-        writeOut: jest.fn(),
-      })
-      .addCommand(buildStartCommand());
+    const program = makeProgram({ suppressOutput: true }).addCommand(
+      buildStartCommand()
+    );
 
     await program.parseAsync(['start'], { from: 'user' });
 
