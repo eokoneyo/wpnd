@@ -9,21 +9,19 @@ import { resolveConfigValue } from './index.js';
 
 describe('exposeConfigGetterForProgram', () => {
   beforeEach(() => {
-    // mock files definition
-    const virtualFiles = {
+    // mocked volume of files
+    const vol = Volume.fromJSON({
       './invalid-config/wpnd.rc': JSON.stringify({}),
       './invalid-config/wrong-config-schema.json': JSON.stringify({
         randomProp: 'hello',
       }),
-    };
-
-    const vol = Volume.fromJSON(virtualFiles);
+    });
 
     const mergedFS = ufs.use({ ...fs }).use(vol);
 
     patchFs(mergedFS);
 
-    Object.entries(virtualFiles).map(([filePath, fileContents]) =>
+    Object.entries(vol.toJSON()).map(([filePath, fileContents]) =>
       jest.mock(filePath, () => fileContents, { virtual: true })
     );
   });
