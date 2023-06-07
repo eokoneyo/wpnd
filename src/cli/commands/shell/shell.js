@@ -4,6 +4,7 @@ import { execa } from 'execa';
 import { Command, Option } from 'commander';
 
 import configOption from '../../options/config/index.js';
+import sourceRunnerEnvValues from '../../utils/source-runner-env-values.js';
 
 const buildShellCommand = () => {
   const shell = new Command('shell');
@@ -44,6 +45,7 @@ const buildShellCommand = () => {
           ),
         ].flat(),
         {
+          env: sourceRunnerEnvValues(parsedConfig),
           stdio: 'inherit',
         }
       );

@@ -1,7 +1,8 @@
 import path from 'path';
 
-import randomWords from 'random-words';
 import { execa } from 'execa';
+
+import sourceRunnerEnvValues from '../../../utils/source-runner-env-values.js';
 
 const startPodmanComposeRunner = ({ parsedConfig, detached, verbose }) =>
   execa(
@@ -17,15 +18,7 @@ const startPodmanComposeRunner = ({ parsedConfig, detached, verbose }) =>
       .flat()
       .filter(Boolean),
     {
-      env: {
-        WPND_IMAGE_NAME:
-          parsedConfig.name ?? randomWords({ exactly: 3, join: '-' }),
-        WPND_IMAGE_PORT: parsedConfig.environment.port,
-        WPND_HOST_DIR_PATH: parsedConfig.srcDir,
-        DB_NAME: parsedConfig.environment.db.name,
-        DB_USER: parsedConfig.environment.db.user,
-        DB_PASSWORD: parsedConfig.environment.db.password,
-      },
+      env: sourceRunnerEnvValues(parsedConfig),
     }
   );
 
