@@ -3,7 +3,6 @@ version: '3.7'
 services:
 
   wordpress:
-    image: ${WPND_IMAGE_NAME}:latest
     build:
       context: .
     restart: always

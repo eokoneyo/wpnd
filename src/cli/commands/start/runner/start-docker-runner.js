@@ -13,7 +13,7 @@ const startDockerRunner = ({ parsedConfig, detached, verbose }) =>
       ['--file', path.join(process.cwd(), parsedConfig.distDir, 'stack.yml')],
       'up',
       [parsedConfig.environment.rebuildOnStart ? '--build' : null],
-      [detached ? '-d' : null],
+      [detached ? '--detached' : null],
       [verbose ? null : '--quiet-pull'],
     ]
       .flat()

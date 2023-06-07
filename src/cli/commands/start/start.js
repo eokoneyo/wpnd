@@ -14,9 +14,9 @@ import showLogs from '../../options/logs.js';
 import startDockerRunner from './runner/start-docker-runner.js';
 import startPodmanComposeRunner from './runner/start-podman-compose-runner.js';
 
-const require = createRequire(import.meta.url);
+const requireFn = createRequire(import.meta.url);
 
-const nodeWhich = require('which');
+const nodeWhich = requireFn('which');
 
 const buildStartCommand = () => {
   const start = new Command('start');
@@ -63,7 +63,7 @@ const buildStartCommand = () => {
         cpy(
           path.join(
             path.dirname(url.fileURLToPath(import.meta.url)),
-            '../../templates/core/*'
+            '../../../templates/core/*'
           ),
           path.join(process.cwd(), parsedConfig.distDir)
         ),
