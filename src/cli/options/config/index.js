@@ -46,9 +46,11 @@ export const resolveConfigValue = (configFilePath) => {
     // eslint-disable-next-line import/no-dynamic-require
     const parsedConfig = require(configPath);
 
-    validate(configSchema, parsedConfig);
+    const mergedConfig = merge(defaultConfigOptions, parsedConfig);
 
-    return merge(defaultConfigOptions, parsedConfig);
+    validate(configSchema, mergedConfig);
+
+    return mergedConfig;
   } catch (e) {
     if (e.code === 'ENOENT') {
       throw new InvalidArgumentError(
