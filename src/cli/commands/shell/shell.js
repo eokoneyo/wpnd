@@ -1,8 +1,7 @@
 import { Command, Option } from 'commander';
 
-import configOption from '../../options/config/index.js';
-
 import shellDockerRunner from './runner/shell-docker-runner.js';
+import shellPodmanRunner from './runner/shell-podman-runner.js';
 
 const buildShellCommand = () => {
   const shell = new Command('shell');
@@ -11,7 +10,6 @@ const buildShellCommand = () => {
     .description(
       'opens up a interactive tty to the services the currently running wpnd app is composed of'
     )
-    .addOption(configOption)
     .addOption(
       new Option(
         '-s, --service <type>',
@@ -20,11 +18,31 @@ const buildShellCommand = () => {
         .choices(['wordpress', 'db'])
         .default('wordpress')
     )
-    .action(async ({ config: parsedConfig, service }) => {
-      (parsedConfig.engine === 'docker' ? shellDockerRunner : () => {}).apply(
-        null,
-        [parsedConfig, service]
-      );
+    .action(async function shellActionHandler() {
+      const { config: parsedConfig, service } = this.optsWithGlobals();
+
+      /**
+       * @type {(config: object, service: string) => import('execa').ExecaChildProcess}
+       */
+      let runnerFn;
+
+      switch (parsedConfig.engine) {
+        case 'podman': {
+          runnerFn = shellPodmanRunner;
+          break;
+        }
+        case 'docker': {
+          runnerFn = shellDockerRunner;
+          break;
+        }
+        default: {
+          shell.error(
+            `support for the engine ${parsedConfig.engine} is not implemented just yet`
+          );
+        }
+      }
+
+      runnerFn(parsedConfig, service);
     });
 
   return shell;

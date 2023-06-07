@@ -8,8 +8,6 @@ import { Command, Option } from 'commander';
 import { writeJsonFile } from 'write-json-file';
 
 import generateComposerConfig from '../../utils/generate-composer-config.js';
-import configOption from '../../options/config/index.js';
-import showLogs from '../../options/logs.js';
 
 import startDockerRunner from './runner/start-docker-runner.js';
 import startPodmanComposeRunner from './runner/start-podman-compose-runner.js';
@@ -23,8 +21,6 @@ const buildStartCommand = () => {
 
   start
     .description('Starts a project development environment')
-    .addOption(configOption)
-    .addOption(showLogs)
     .addOption(
       new Option(
         '-d, --detached',
@@ -32,7 +28,7 @@ const buildStartCommand = () => {
       )
     )
     .hook('preAction', async (command, actionCommand) => {
-      const { engine } = actionCommand.opts().config;
+      const { engine } = actionCommand.optsWithGlobals().config;
 
       // TODO: handle error when specified engine is not available
       const tasks = new Listr([
@@ -58,7 +54,13 @@ const buildStartCommand = () => {
         command.error(e.message);
       }
     })
-    .action(async ({ config: parsedConfig, detached, verbose }) => {
+    .action(async function startActionHandler() {
+      const {
+        config: parsedConfig,
+        detached,
+        verbose,
+      } = this.optsWithGlobals();
+
       await Promise.allSettled([
         cpy(
           path.join(
@@ -76,11 +78,28 @@ const buildStartCommand = () => {
         ),
       ]);
 
-      const runner = (
-        parsedConfig.engine === 'docker'
-          ? startDockerRunner
-          : startPodmanComposeRunner
-      ).call(null, {
+      /**
+       * @type {(config: object) => import('execa').ExecaChildProcess}
+       */
+      let runnerFn;
+
+      switch (parsedConfig.engine) {
+        case 'podman': {
+          runnerFn = startPodmanComposeRunner;
+          break;
+        }
+        case 'docker': {
+          runnerFn = startDockerRunner;
+          break;
+        }
+        default: {
+          start.error(
+            `support for the engine ${parsedConfig.engine} is not implemented just yet`
+          );
+        }
+      }
+
+      const runner = runnerFn({
         parsedConfig,
         detached,
         verbose,

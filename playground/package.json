@@ -2,9 +2,10 @@
   "name": "wpnd-playground",
   "private": true,
   "scripts": {
-    "start": "../src/bin/index.js start --config wpnd.config.json",
-    "destroy": "../src/bin/index.js destroy",
-    "shell:wordpress": "../src/bin/index.js shell",
-    "shell:db": "../src/bin/index.js shell -s db"
+    "wpnd": "../src/bin/index.js --config wpnd.config.json",
+    "start": "yarn wpnd start",
+    "destroy": "yarn wpnd destroy",
+    "shell:wordpress": "yarn wpnd shell",
+    "shell:db": "yarn wpnd shell -s db"
   }
 }

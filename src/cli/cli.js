@@ -8,6 +8,7 @@ import { Command } from 'commander';
 import buildStartCommand from './commands/start/start.js';
 import buildDestroyCommand from './commands/destroy/destroy.js';
 import buildShellCommand from './commands/shell/shell.js';
+import configOption from './options/config/index.js';
 
 const require = createRequire(import.meta.url);
 
@@ -22,15 +23,16 @@ program
   .name('wpnd')
   .description('A CLI util for provisioning local wordpress dev environment')
   .version(pkg.version)
+  .addOption(configOption)
+  .addCommand(buildStartCommand())
+  .addCommand(buildShellCommand())
+  .addCommand(buildDestroyCommand())
+  .showSuggestionAfterError()
   .configureOutput({
     outputError(str, write) {
       return write(`${chalk.red.bold('ERROR')}: ${str}`);
     },
-  })
-  .addCommand(buildStartCommand())
-  .addCommand(buildShellCommand())
-  .addCommand(buildDestroyCommand())
-  .showSuggestionAfterError();
+  });
 
 async function cli(args) {
   await program.parseAsync(args);
