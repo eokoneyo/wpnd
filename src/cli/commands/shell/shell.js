@@ -1,10 +1,8 @@
-import path from 'path';
-
-import { execa } from 'execa';
 import { Command, Option } from 'commander';
 
 import configOption from '../../options/config/index.js';
-import sourceRunnerEnvValues from '../../utils/source-runner-env-values.js';
+
+import shellDockerRunner from './runner/shell-docker-runner.js';
 
 const buildShellCommand = () => {
   const shell = new Command('shell');
@@ -23,31 +21,9 @@ const buildShellCommand = () => {
         .default('wordpress')
     )
     .action(async ({ config: parsedConfig, service }) => {
-      execa(
-        'docker',
-        [
-          'compose',
-          parsedConfig.name
-            ? ['--project-name', parsedConfig.name]
-            : [
-                '--file',
-                path.join(process.cwd(), parsedConfig.distDir, 'stack.yml'),
-              ],
-          'exec',
-          service,
-          ['bash'].concat(
-            service === 'db'
-              ? [
-                  '-c',
-                  `mysql -u${parsedConfig.environment.db.user} -p${parsedConfig.environment.db.password}`,
-                ]
-              : []
-          ),
-        ].flat(),
-        {
-          env: sourceRunnerEnvValues(parsedConfig),
-          stdio: 'inherit',
-        }
+      (parsedConfig.engine === 'docker' ? shellDockerRunner : () => {}).apply(
+        null,
+        [parsedConfig, service]
       );
     });
 
