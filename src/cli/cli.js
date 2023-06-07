@@ -5,9 +5,9 @@ import { createRequire } from 'module';
 import chalk from 'chalk';
 import { Command } from 'commander';
 
-import buildStartCommand from './commands/start.js';
-import buildDestroyCommand from './commands/destroy.js';
-import buildShellCommand from './commands/shell.js';
+import buildStartCommand from './commands/start/start.js';
+import buildDestroyCommand from './commands/destroy/destroy.js';
+import buildShellCommand from './commands/shell/shell.js';
 
 const require = createRequire(import.meta.url);
 

@@ -3,7 +3,7 @@ import path from 'path';
 import { execa } from 'execa';
 import { Command, Option } from 'commander';
 
-import programConfig from './options/config/index.js';
+import configOption from '../../options/config/index.js';
 
 const buildShellCommand = () => {
   const shell = new Command('shell');
@@ -12,7 +12,7 @@ const buildShellCommand = () => {
     .description(
       'opens up a interactive tty to the services the currently running wpnd app is composed of'
     )
-    .addOption(programConfig)
+    .addOption(configOption)
     .addOption(
       new Option(
         '-s, --service <type>',

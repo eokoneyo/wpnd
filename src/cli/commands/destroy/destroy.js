@@ -3,14 +3,14 @@ import path from 'path';
 import { Command } from 'commander';
 import { execa } from 'execa';
 
-import programConfig from './options/config/index.js';
+import configOption from '../../options/config/index.js';
 
 const buildDestroyCommand = () => {
   const destroy = new Command('destroy');
 
   destroy
     .description('removes the created image for the configuration specified')
-    .addOption(programConfig)
+    .addOption(configOption)
     .action(async ({ config: parsedConfig }) => {
       const disposableRunner = execa(
         'docker',

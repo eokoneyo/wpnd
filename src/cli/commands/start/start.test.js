@@ -3,7 +3,7 @@ import { createRequire } from 'node:module';
 import { Command } from 'commander';
 import { jest, expect, it, describe, afterEach } from '@jest/globals';
 
-import makeProgram from '../../__tests__/helpers/make-program.js';
+import makeProgram from '../../../__tests__/helpers/make-program.js';
 
 const require = createRequire(import.meta.url);
 

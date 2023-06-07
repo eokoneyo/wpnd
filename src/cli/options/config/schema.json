@@ -14,7 +14,12 @@
       "description": "Specify name for directory that will contain the theme and plugin directory",
       "type": "string"
     },
-    "skipDockerCheck": {
+    "engine": {
+      "description": "Container engine implementation to use",
+      "type": "string",
+      "enum": ["docker", "podman"]
+    },
+    "skipEngineCheck": {
       "description": "Specify if check for docker is skipped whilst attempting to provision environment",
       "type": "boolean"
     },
@@ -56,5 +61,6 @@
       "type": "object"
     }
   },
+  "required": ["engine"],
   "additionalProperties": false
 }

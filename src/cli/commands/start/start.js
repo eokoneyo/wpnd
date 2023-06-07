@@ -4,15 +4,15 @@ import { createRequire } from 'module';
 
 import cpy from 'cpy';
 import Listr from 'listr';
-import { execa } from 'execa';
 import { Command, Option } from 'commander';
 import { writeJsonFile } from 'write-json-file';
-import randomWords from 'random-words';
 
-import generateComposerConfig from '../utils/generate-composer-config.js';
+import generateComposerConfig from '../../utils/generate-composer-config.js';
+import configOption from '../../options/config/index.js';
+import showLogs from '../../options/logs.js';
 
-import programConfig from './options/config/index.js';
-import showLogs from './options/logs.js';
+import startDockerRunner from './runner/start-docker-runner.js';
+import startPodmanComposeRunner from './runner/start-podman-compose-runner.js';
 
 const require = createRequire(import.meta.url);
 
@@ -23,7 +23,7 @@ const buildStartCommand = () => {
 
   start
     .description('Starts a project development environment')
-    .addOption(programConfig)
+    .addOption(configOption)
     .addOption(showLogs)
     .addOption(
       new Option(
@@ -31,18 +31,32 @@ const buildStartCommand = () => {
         'run container in standard docker compose detached mode'
       )
     )
-    .hook('preAction', async (command) => {
+    .hook('preAction', async (command, actionCommand) => {
+      const { engine } = actionCommand.opts().config;
+
+      // TODO: handle error when specified engine is not available
       const tasks = new Listr([
         {
           title: 'Check Docker Status',
-          enabled: command.opts().skipDockerCheck,
+          enabled: () => engine === 'docker',
           task: () => nodeWhich('docker'),
+        },
+        {
+          title: 'Check podman binary',
+          enabled: () => engine === 'podman',
+          task: (ctx, task) =>
+            nodeWhich('podman-compose').catch(() => {
+              ctx.podmanCompose = false;
+              task.skip('podman-compose, not available');
+            }),
         },
       ]);
 
-      await tasks.run().catch((err) => {
-        start.error(err.message);
-      });
+      try {
+        await tasks.run();
+      } catch (e) {
+        command.error(e.message);
+      }
     })
     .action(async ({ config: parsedConfig, detached, verbose }) => {
       await Promise.allSettled([
@@ -62,34 +76,15 @@ const buildStartCommand = () => {
         ),
       ]);
 
-      const runner = execa(
-        'docker',
-        [
-          'compose',
-          parsedConfig.name ? ['--project-name', parsedConfig.name] : null,
-          [
-            '--file',
-            path.join(process.cwd(), parsedConfig.distDir, 'stack.yml'),
-          ],
-          'up',
-          [parsedConfig.environment.rebuildOnStart ? '--build' : null],
-          [detached ? '-d' : null],
-          [verbose ? null : '--quiet-pull'],
-        ]
-          .flat()
-          .filter(Boolean),
-        {
-          env: {
-            WPND_IMAGE_NAME:
-              parsedConfig.name ?? randomWords({ exactly: 3, join: '-' }),
-            WPND_IMAGE_PORT: parsedConfig.environment.port,
-            WPND_HOST_DIR_PATH: parsedConfig.srcDir,
-            DB_NAME: parsedConfig.environment.db.name,
-            DB_USER: parsedConfig.environment.db.user,
-            DB_PASSWORD: parsedConfig.environment.db.password,
-          },
-        }
-      );
+      const runner = (
+        parsedConfig.engine === 'docker'
+          ? startDockerRunner
+          : startPodmanComposeRunner
+      ).call(null, {
+        parsedConfig,
+        detached,
+        verbose,
+      });
 
       // setup handler to terminate runner using CTRL+C
       process.on(

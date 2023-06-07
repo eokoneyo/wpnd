@@ -11,10 +11,11 @@ const require = createRequire(import.meta.url);
 const defaultConfigOptions = {
   srcDir: 'src',
   distDir: '.wpnd', // cannot leave project directory
+  engine: 'docker',
   environment: {
     port: 8085,
-    skipDockerCheck: false,
     rebuildOnStart: false,
+    skipEngineCheck: false,
     db: {
       name: 'exampledb',
       user: 'exampleuser',
@@ -55,12 +56,12 @@ export const resolveConfigValue = (configFilePath) => {
       );
     }
 
-    throw new InvalidArgumentError('schema mismatch issues');
+    throw new InvalidArgumentError(e.message);
   }
 };
 
-const programConfig = new Option('-c,--config [file]', 'path to config file')
+const configOption = new Option('-c,--config [file]', 'path to config file')
   .default(defaultConfigOptions)
   .argParser((value) => resolveConfigValue(value));
 
-export default programConfig;
+export default configOption;
