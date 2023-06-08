@@ -3,9 +3,8 @@ import destroyDockerRunner from './runner/destroy-docker-runner.js';
 
 /**
  * @this {import('commander').Command}
- * @returns {Promise<void>}
  */
-async function destroyActionHandler() {
+function destroyActionHandler() {
   const { config: parsedConfig } = this.optsWithGlobals();
 
   /**
