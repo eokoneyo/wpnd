@@ -1,9 +1,9 @@
-const sourceRunnerEnvValues = (parsedConfig) => ({
-  WPND_IMAGE_PORT: String(parsedConfig.environment.port),
-  WPND_HOST_DIR_PATH: parsedConfig.srcDir,
-  DB_NAME: parsedConfig.environment.db.name,
-  DB_USER: parsedConfig.environment.db.user,
-  DB_PASSWORD: parsedConfig.environment.db.password,
+const sourceRunnerEnvValues = (config) => ({
+  WPND_IMAGE_PORT: String(config.environment.port),
+  WPND_HOST_DIR_PATH: config.srcDir,
+  DB_NAME: config.environment.db.name,
+  DB_USER: config.environment.db.user,
+  DB_PASSWORD: config.environment.db.password,
 });
 
 export default sourceRunnerEnvValues;

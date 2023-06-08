@@ -5,7 +5,7 @@ import destroyDockerRunner from './runner/destroy-docker-runner.js';
  * @this {import('commander').Command}
  */
 function destroyActionHandler() {
-  const { config: parsedConfig } = this.optsWithGlobals();
+  const { parsedConfig } = this.optsWithGlobals();
 
   /**
    * @type {(config: object) => import('execa').ExecaChildProcess}

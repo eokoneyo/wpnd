@@ -5,7 +5,7 @@ import shellPodmanRunner from './runner/shell-podman-runner.js';
  * @this {import('commander').Command}
  */
 function shellActionHandler() {
-  const { config: parsedConfig, service } = this.optsWithGlobals();
+  const { parsedConfig, service } = this.optsWithGlobals();
 
   /**
    * @type {(config: object, service: string) => import('execa').ExecaChildProcess}

@@ -7,7 +7,7 @@ import { jest, expect, it, describe, beforeEach } from '@jest/globals';
 
 import { resolveConfigValue } from './index.js';
 
-describe('exposeConfigGetterForProgram', () => {
+describe('resolveConfigValue', () => {
   beforeEach(() => {
     // mocked volume of files
     const vol = Volume.fromJSON({

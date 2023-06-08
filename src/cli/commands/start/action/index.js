@@ -14,7 +14,7 @@ import startPodmanComposeRunner from './runner/start-podman-compose-runner.js';
  * @returns {Promise<void>}
  */
 async function startActionHandler() {
-  const { config: parsedConfig, detached, verbose } = this.optsWithGlobals();
+  const { parsedConfig, detached, verbose } = this.optsWithGlobals();
 
   await Promise.allSettled([
     cpy(

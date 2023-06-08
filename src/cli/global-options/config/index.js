@@ -8,6 +8,8 @@ import { Option, InvalidArgumentError } from 'commander';
 
 const require = createRequire(import.meta.url);
 
+const DEFAULT_CONFIG_FILE = 'wpnd.config.json';
+
 const defaultConfigOptions = {
   srcDir: 'src',
   distDir: '.wpnd', // cannot leave project directory
@@ -52,6 +54,10 @@ export const resolveConfigValue = (configFilePath) => {
 
     return mergedConfig;
   } catch (e) {
+    if (e.code === 'ENOENT' && configFilePath === DEFAULT_CONFIG_FILE) {
+      return defaultConfigOptions;
+    }
+
     if (e.code === 'ENOENT') {
       throw new InvalidArgumentError(
         'Unable to find config file at path specified'
@@ -62,8 +68,9 @@ export const resolveConfigValue = (configFilePath) => {
   }
 };
 
-const configOption = new Option('-c,--config [file]', 'path to config file')
-  .default(defaultConfigOptions)
-  .argParser((value) => resolveConfigValue(value));
+const configOption = new Option(
+  '-c, --config <file>',
+  'path to config file'
+).default(DEFAULT_CONFIG_FILE);
 
 export default configOption;

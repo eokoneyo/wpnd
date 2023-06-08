@@ -20,8 +20,8 @@ const buildStartCommand = () => {
         'run container in standard docker compose detached mode'
       )
     )
-    .hook('preAction', async (command, actionCommand) => {
-      const { engine } = actionCommand.optsWithGlobals().config;
+    .hook('preAction', async (parentCommand, actionCommand) => {
+      const { engine } = actionCommand.optsWithGlobals().parsedConfig;
 
       // TODO: handle error when specified engine is not available
       const tasks = new Listr([
@@ -44,7 +44,7 @@ const buildStartCommand = () => {
       try {
         await tasks.run();
       } catch (e) {
-        command.error(e.message);
+        parentCommand.error(e.message);
       }
     })
     .action(startActionHandler);

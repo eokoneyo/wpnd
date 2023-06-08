@@ -8,7 +8,9 @@ import { Command } from 'commander';
 import buildStartCommand from './commands/start/start.js';
 import buildDestroyCommand from './commands/destroy/destroy.js';
 import buildShellCommand from './commands/shell/shell.js';
-import configOption from './global-options/config/index.js';
+import configOption, {
+  resolveConfigValue,
+} from './global-options/config/index.js';
 
 const require = createRequire(import.meta.url);
 
@@ -24,6 +26,10 @@ program
   .description('A CLI util for provisioning local wordpress dev environment')
   .version(pkg.version)
   .addOption(configOption)
+  .hook('preSubcommand', (thisCommand) => {
+    const { config: configPath } = thisCommand.opts();
+    thisCommand.setOptionValue('parsedConfig', resolveConfigValue(configPath));
+  })
   .addCommand(buildStartCommand())
   .addCommand(buildShellCommand())
   .addCommand(buildDestroyCommand())
