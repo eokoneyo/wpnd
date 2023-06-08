@@ -8,7 +8,7 @@ import { Command } from 'commander';
 import buildStartCommand from './commands/start/start.js';
 import buildDestroyCommand from './commands/destroy/destroy.js';
 import buildShellCommand from './commands/shell/shell.js';
-import configOption from './options/config/index.js';
+import configOption from './global-options/config/index.js';
 
 const require = createRequire(import.meta.url);
 

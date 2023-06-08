@@ -2,18 +2,17 @@ import path from 'path';
 
 import { execa } from 'execa';
 
-import sourceRunnerEnvValues from '../../../utils/source-runner-env-values.js';
+import sourceRunnerEnvValues from '../../../../utils/source-runner-env-values.js';
 
-const startDockerRunner = ({ parsedConfig, detached, verbose }) =>
+const startPodmanComposeRunner = ({ parsedConfig, detached, verbose }) =>
   execa(
-    'docker',
+    'podman-compose',
     [
-      'compose',
       parsedConfig.name ? ['--project-name', parsedConfig.name] : null,
       ['--file', path.join(process.cwd(), parsedConfig.distDir, 'stack.yml')],
       'up',
       [parsedConfig.environment.rebuildOnStart ? '--build' : null],
-      [detached ? '--detached' : null],
+      [detached ? '--detach' : '--abort-on-container-exit'],
       [verbose ? null : '--quiet-pull'],
     ]
       .flat()
@@ -23,4 +22,4 @@ const startDockerRunner = ({ parsedConfig, detached, verbose }) =>
     }
   );
 
-export default startDockerRunner;
+export default startPodmanComposeRunner;
