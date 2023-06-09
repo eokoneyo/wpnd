@@ -66,7 +66,7 @@ async function startActionHandler() {
     () =>
       new Promise((resolve, reject) => {
         // send signal to cancel to our runner
-        runner.cancel();
+        runner.kill('SIGWINCH');
 
         runner.once('exit', () => {
           resolve(undefined);
@@ -77,9 +77,6 @@ async function startActionHandler() {
         });
       })
   );
-
-  runner.stdout.pipe(process.stdout);
-  runner.stderr.pipe(process.stderr);
 }
 
 export default startActionHandler;

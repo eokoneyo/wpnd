@@ -28,10 +28,7 @@ function destroyActionHandler() {
     }
   }
 
-  const disposableRunner = runnerFn(parsedConfig);
-
-  disposableRunner.stdout.pipe(process.stdout);
-  disposableRunner.stderr.pipe(process.stderr);
+  runnerFn(parsedConfig);
 }
 
 export default destroyActionHandler;

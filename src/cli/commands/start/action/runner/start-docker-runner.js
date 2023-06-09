@@ -20,6 +20,7 @@ const startDockerRunner = ({ parsedConfig, detached, verbose }) =>
       .filter(Boolean),
     {
       env: sourceRunnerEnvValues(parsedConfig),
+      stdio: 'inherit',
     }
   );
 

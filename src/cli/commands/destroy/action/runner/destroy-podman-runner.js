@@ -14,6 +14,7 @@ const destroyDockerRunner = (parsedConfig) =>
     ].flat(),
     {
       env: sourceRunnerEnvValues(parsedConfig),
+      stdio: 'inherit',
     }
   );
 

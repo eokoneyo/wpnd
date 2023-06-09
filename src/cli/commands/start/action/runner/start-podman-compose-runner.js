@@ -19,6 +19,7 @@ const startPodmanComposeRunner = ({ parsedConfig, detached, verbose }) =>
       .filter(Boolean),
     {
       env: sourceRunnerEnvValues(parsedConfig),
+      stdio: 'inherit',
     }
   );
 
