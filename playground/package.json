@@ -4,6 +4,7 @@
   "scripts": {
     "wpnd": "../src/bin/index.js",
     "start": "yarn wpnd start",
+    "start:code": "yarn wpnd start --code",
     "destroy": "yarn wpnd destroy",
     "shell:wordpress": "yarn wpnd shell",
     "shell:db": "yarn wpnd shell -s db"

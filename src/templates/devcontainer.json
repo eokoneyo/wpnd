@@ -1,0 +1,27 @@
+{
+  "dockerComposeFile": "",
+  "service": "wordpress",
+  "overrideCommand": false,
+  "shutdownAction": "stopCompose",
+  "workspaceFolder": "/var/www/html",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "xdebug.php-debug",
+        "bmewburn.vscode-intelephense-client",
+        "xdebug.php-pack",
+        "devsense.phptools-vscode"
+      ],
+      "settings": {
+        "security": {
+          "workspace": {
+            "trust": {
+              "enabled": false
+            }
+          }
+        },
+        "dotfiles": {}
+      }
+    }
+  }
+}
