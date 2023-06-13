@@ -2,9 +2,11 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 
+import { writeJsonFile } from 'write-json-file';
+
 const requireFn = createRequire(import.meta.url);
 
-const generateComposerConfig = (userDefinedPackages) => {
+const generateComposerConfig = (parsedConfig) => {
   const composerJsonTemplate = requireFn(
     path.resolve(
       fileURLToPath(
@@ -13,10 +15,14 @@ const generateComposerConfig = (userDefinedPackages) => {
     )
   );
 
-  return {
-    ...composerJsonTemplate,
-    require: userDefinedPackages,
-  };
+  return writeJsonFile(
+    path.join(process.cwd(), parsedConfig.distDir, 'composer.json'),
+    {
+      ...composerJsonTemplate,
+      require: parsedConfig.wpackagist,
+    },
+    { indent: 2 }
+  );
 };
 
 export default generateComposerConfig;

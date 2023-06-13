@@ -1,9 +1,7 @@
 import path from 'path';
-import url from 'url';
 
-import cpy from 'cpy';
-import { writeJsonFile } from 'write-json-file';
 
+import provisionContainerDefinition from '../../../utils/provision-container-definition.js';
 import generateComposerConfig from '../../../utils/generate-composer-config.js';
 
 import startDockerRunner from './runner/start-docker-runner.js';
@@ -17,20 +15,8 @@ async function startActionHandler() {
   const { parsedConfig, detached, verbose } = this.optsWithGlobals();
 
   await Promise.allSettled([
-    cpy(
-      path.join(
-        path.dirname(url.fileURLToPath(import.meta.url)),
-        '../../../templates/core/*'
-      ),
-      path.join(process.cwd(), parsedConfig.distDir)
-    ),
-    writeJsonFile(
-      path.join(process.cwd(), parsedConfig.distDir, 'composer.json'),
-      generateComposerConfig(parsedConfig.wpackagist),
-      {
-        indent: 2,
-      }
-    ),
+    provisionContainerDefinition(parsedConfig.distDir),
+    generateComposerConfig(parsedConfig),
   ]);
 
   /**
