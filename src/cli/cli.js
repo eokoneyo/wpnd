@@ -12,12 +12,13 @@ import configOption, {
   resolveConfigValue,
 } from './global-options/config/index.js';
 
-const require = createRequire(import.meta.url);
+const requireFn = createRequire(import.meta.url);
 
-// eslint-disable-next-line import/no-dynamic-require
-const pkg = require(path.resolve(
-  fileURLToPath(new URL('../../package.json', import.meta.url).href)
-));
+const pkg = requireFn(
+  path.resolve(
+    fileURLToPath(new URL('../../package.json', import.meta.url).href)
+  )
+);
 
 const program = new Command();
 

@@ -10,6 +10,55 @@ const requireFn = createRequire(import.meta.url);
 
 const nodeWhich = requireFn('which');
 
+export const prerequisitesCheck = ({ isCode, containerEngine }) => {
+  // TODO: handle error when specified engine is not available
+  const tasks = new Listr([
+    {
+      title: 'Check Docker Status',
+      enabled: () => containerEngine === 'docker',
+      task: () => nodeWhich('docker'),
+    },
+    {
+      title: 'Check podman binary',
+      enabled: () => containerEngine === 'podman',
+      task: (ctx, task) =>
+        nodeWhich('podman-compose').catch(() => {
+          ctx.podmanCompose = false;
+          task.skip('podman-compose, not available');
+        }),
+    },
+    {
+      title: 'Check Code Binary',
+      enabled: () => isCode === true,
+      task: () => nodeWhich('code'),
+    },
+    {
+      title: 'Check for remote container extension',
+      enabled: () => isCode === true,
+      task: async (ctx, task) => {
+        const { stdout: result } = await execa('code', ['--list-extensions']);
+
+        if (result.indexOf('ms-vscode-remote.remote-containers') < 0) {
+          ctx.remoteContainers = false;
+          task.skip('remote containers extension is not installed');
+        }
+      },
+    },
+    {
+      title: 'Install remote container extension',
+      skip: (ctx) => ctx.remoteContainers !== false,
+      enabled: () => isCode === true,
+      task: () =>
+        execa('code', [
+          '--install-extension',
+          'ms-vscode-remote.remote-containers',
+        ]),
+    },
+  ]);
+
+  return tasks.run();
+};
+
 const buildStartCommand = () => {
   const start = new Command('start');
 
@@ -33,55 +82,8 @@ const buildStartCommand = () => {
         parsedConfig: { engine },
       } = actionCommand.optsWithGlobals();
 
-      // TODO: handle error when specified engine is not available
-      const tasks = new Listr([
-        {
-          title: 'Check Docker Status',
-          enabled: () => engine === 'docker',
-          task: () => nodeWhich('docker'),
-        },
-        {
-          title: 'Check podman binary',
-          enabled: () => engine === 'podman',
-          task: (ctx, task) =>
-            nodeWhich('podman-compose').catch(() => {
-              ctx.podmanCompose = false;
-              task.skip('podman-compose, not available');
-            }),
-        },
-        {
-          title: 'Check Code Binary',
-          enabled: () => code === true,
-          task: () => nodeWhich('code'),
-        },
-        {
-          title: 'Check for remote container extension',
-          enabled: () => code === true,
-          task: async (ctx, task) => {
-            const { stdout: result } = await execa('code', [
-              '--list-extensions',
-            ]);
-
-            if (result.indexOf('ms-vscode-remote.remote-containers') < 0) {
-              ctx.remoteContainers = false;
-              task.skip('remote containers extension is not installed');
-            }
-          },
-        },
-        {
-          title: 'Install remote container extension',
-          skip: (ctx) => ctx.remoteContainers !== false,
-          enabled: () => code === true,
-          task: () =>
-            execa('code', [
-              '--install-extension',
-              'ms-vscode-remote.remote-containers',
-            ]),
-        },
-      ]);
-
       try {
-        await tasks.run();
+        await prerequisitesCheck({ isCode: code, containerEngine: engine });
       } catch (e) {
         parentCommand.error(e.message);
       }
