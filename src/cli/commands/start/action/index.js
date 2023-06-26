@@ -5,7 +5,6 @@ import pRetry from 'p-retry';
 
 import provisionContainerDefinition from '../../../utils/provision-container-definition.js';
 import generateComposerConfig from '../../../utils/generate-composer-config.js';
-import generateDevcontainerConfig from '../../../utils/generate-devcontainer-config.js';
 import sourceRunnerEnvValues from '../../../utils/source-runner-env-values.js';
 
 import startDockerRunner from './runner/start-docker-runner.js';
@@ -32,13 +31,10 @@ const generateVSCodeAttachToContainerConnectionString = (
 async function startActionHandler() {
   const { parsedConfig, detached, verbose, code } = this.optsWithGlobals();
 
-  await Promise.allSettled(
-    [
-      provisionContainerDefinition(parsedConfig.distDir),
-      generateComposerConfig(parsedConfig),
-      code ? generateDevcontainerConfig(parsedConfig) : null,
-    ].filter(Boolean)
-  );
+  await Promise.allSettled([
+    provisionContainerDefinition(parsedConfig.distDir),
+    generateComposerConfig(parsedConfig),
+  ]);
 
   /**
    * @type {(config: object) => import('execa').ExecaChildProcess}
@@ -69,9 +65,10 @@ async function startActionHandler() {
 
   runner.addListener('spawn', async () => {
     if (code) {
+      // setup handler to open started container in code when the code flag is passed.
       await pRetry(
         async () => {
-          const { stdout } = await execa(
+          const { stdout: containersQuery } = await execa(
             parsedConfig.engine === 'docker' ? 'docker' : 'podman',
             [
               parsedConfig.engine === 'docker' ? 'compose' : null,
@@ -88,7 +85,7 @@ async function startActionHandler() {
               .filter(Boolean)
           );
 
-          const queryResult = JSON.parse(stdout);
+          const queryResult = JSON.parse(containersQuery);
 
           if (!queryResult) {
             throw new Error('Container still starting up');
@@ -98,14 +95,32 @@ async function startActionHandler() {
             (resultItem) => resultItem.Service === 'wordpress'
           );
 
-          if (wordpressContainer) {
+          if (!wordpressContainer) {
+            throw new Error(
+              'Some error occurred finding the provisioned wordpress container'
+            );
+          }
+
+          const { stdout: containerInspectionResult } = await execa(
+            parsedConfig.engine,
+            ['inspect', '--type', 'container', wordpressContainer.Name]
+          );
+
+          const [wordpressContainerDetails] = JSON.parse(
+            containerInspectionResult
+          ).filter(({ Name }) =>
+            new RegExp(wordpressContainer.Name).test(Name)
+          );
+
+          if (wordpressContainerDetails) {
             execa(
               'code',
               [
+                '-n',
                 '--folder-uri',
                 generateVSCodeAttachToContainerConnectionString(
-                  wordpressContainer.Name,
-                  '/var/www/html'
+                  wordpressContainerDetails.Name,
+                  wordpressContainerDetails.Config.WorkingDir
                 ),
               ],
               {
@@ -117,7 +132,17 @@ async function startActionHandler() {
             );
           }
         },
-        { retries: 20 }
+        {
+          retries: 20,
+          onFailedAttempt(error) {
+            if (!error.retriesLeft) {
+              // eslint-disable-next-line no-console
+              console.error(
+                'Failed to discover container to attach to within specified time'
+              );
+            }
+          },
+        }
       );
     }
   });
