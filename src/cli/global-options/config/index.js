@@ -54,6 +54,8 @@ export const resolveConfigValue = (configFilePath) => {
 
     return mergedConfig;
   } catch (e) {
+    // in cases where no file was found but the provided values matches the default value,
+    // ignore and return the default config values
     if (e.code === 'ENOENT' && configFilePath === DEFAULT_CONFIG_FILE) {
       return defaultConfigOptions;
     }
