@@ -1,6 +1,6 @@
 import { createRequire } from 'module';
 
-import Listr from 'listr';
+import { Listr } from 'listr2';
 import { Command, Option } from 'commander';
 import { execa } from 'execa';
 
