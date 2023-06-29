@@ -1,3 +1,20 @@
+# [0.6.0](https://github.com/eokoneyo/wpnd/compare/v0.5.0...v0.6.0) (2023-06-29)
+
+
+### Features
+
+* consolidate program config file parsing as command option ([33b755c](https://github.com/eokoneyo/wpnd/commit/33b755c773cdfa7cbcb3ff2e1d6088ea13305e64))
+* get podamn to create container for environment ([dc1cf90](https://github.com/eokoneyo/wpnd/commit/dc1cf9094de14c9467dae66feff49c5b21f9300e))
+* remove accomodation for optional custom.ini because the syntax does not work with podman ([4c2197b](https://github.com/eokoneyo/wpnd/commit/4c2197b66879d46bc253e6a1e75d473f5393ee67))
+* restructure how config file is passed, also add better integration for podman across commands ([65a37b2](https://github.com/eokoneyo/wpnd/commit/65a37b212e2e7ea988b07576178081ebd24ec71c))
+* specify devcontainer config on created image in place of some config.json file ([76274b8](https://github.com/eokoneyo/wpnd/commit/76274b8f7024aa4d166105e97179d929fbe09d35))
+* start on adding option to attach vscode to running container ([95778b2](https://github.com/eokoneyo/wpnd/commit/95778b20cce0418fdcc55839e63d47f7d24b9c44))
+* start on adding support for podman and a whole lot of refactor of files ([c034861](https://github.com/eokoneyo/wpnd/commit/c034861cfca1fe7d8591d3f5da3789c719fe1687))
+* start on extending support for podman to destroy and shell ([4e4f326](https://github.com/eokoneyo/wpnd/commit/4e4f326163107b79359adb78b9a51a74efb9b3f6))
+* swap skipDockerCheck for skipEngineCheck option given other engines are now supported ([b103ce1](https://github.com/eokoneyo/wpnd/commit/b103ce127d798cb88f406096671fdc065df9421f))
+* switch to listr2 ([89916b6](https://github.com/eokoneyo/wpnd/commit/89916b66d5a99a8beb48f8c5f45b8907d547f9dd))
+* try out new approach to reading package.json file ([c4a5b7f](https://github.com/eokoneyo/wpnd/commit/c4a5b7f87996bd01936d97e0173215b37883af96))
+
 # [0.5.0](https://github.com/eokoneyo/wpnd/compare/v0.4.0...v0.5.0) (2023-05-24)
 
 
