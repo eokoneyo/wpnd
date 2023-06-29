@@ -24,6 +24,86 @@ const generateVSCodeAttachToContainerConnectionString = (
     'hex'
   )}${pathString}`;
 
+const openCode = async (parsedConfig) => {
+  // setup handler to open started container in code when the code flag is passed.
+  await pRetry(
+    async () => {
+      const { stdout: containersQuery } = await execa(
+        parsedConfig.engine === 'docker' ? 'docker' : 'podman',
+        [
+          parsedConfig.engine === 'docker' ? 'compose' : null,
+          parsedConfig.name ? ['--project-name', parsedConfig.name] : null,
+          [
+            '--file',
+            path.join(process.cwd(), parsedConfig.distDir, 'stack.yml'),
+          ],
+          'ps',
+          ['--filter', 'status=running'],
+          ['--format', 'json'],
+        ]
+          .flat()
+          .filter(Boolean)
+      );
+
+      const queryResult = JSON.parse(containersQuery);
+
+      if (!queryResult) {
+        throw new Error('Container still starting up');
+      }
+
+      const [wordpressContainer] = queryResult.filter(
+        (resultItem) => resultItem.Service === 'wordpress'
+      );
+
+      if (!wordpressContainer) {
+        throw new Error(
+          'Some error occurred finding the provisioned wordpress container'
+        );
+      }
+
+      const { stdout: containerInspectionResult } = await execa(
+        parsedConfig.engine,
+        ['inspect', '--type', 'container', wordpressContainer.Name]
+      );
+
+      const [wordpressContainerDetails] = JSON.parse(
+        containerInspectionResult
+      ).filter(({ Name }) => new RegExp(wordpressContainer.Name).test(Name));
+
+      if (wordpressContainerDetails) {
+        execa(
+          'code',
+          [
+            '-n',
+            '--folder-uri',
+            generateVSCodeAttachToContainerConnectionString(
+              wordpressContainerDetails.Name,
+              wordpressContainerDetails.Config.WorkingDir
+            ),
+          ],
+          {
+            env: {
+              ...sourceRunnerEnvValues(parsedConfig),
+              COMPOSE_PROJECT_NAME: parsedConfig.name,
+            },
+          }
+        );
+      }
+    },
+    {
+      retries: 20,
+      onFailedAttempt(error) {
+        if (!error.retriesLeft) {
+          // eslint-disable-next-line no-console
+          console.error(
+            'Failed to discover container to attach to within specified time'
+          );
+        }
+      },
+    }
+  );
+};
+
 /**
  * @this {import('commander').Command}
  * @returns {Promise<void>}
@@ -63,89 +143,9 @@ async function startActionHandler() {
     verbose,
   });
 
-  runner.addListener('spawn', async () => {
-    if (code) {
-      // setup handler to open started container in code when the code flag is passed.
-      await pRetry(
-        async () => {
-          const { stdout: containersQuery } = await execa(
-            parsedConfig.engine === 'docker' ? 'docker' : 'podman',
-            [
-              parsedConfig.engine === 'docker' ? 'compose' : null,
-              parsedConfig.name ? ['--project-name', parsedConfig.name] : null,
-              [
-                '--file',
-                path.join(process.cwd(), parsedConfig.distDir, 'stack.yml'),
-              ],
-              'ps',
-              ['--filter', 'status=running'],
-              ['--format', 'json'],
-            ]
-              .flat()
-              .filter(Boolean)
-          );
-
-          const queryResult = JSON.parse(containersQuery);
-
-          if (!queryResult) {
-            throw new Error('Container still starting up');
-          }
-
-          const [wordpressContainer] = queryResult.filter(
-            (resultItem) => resultItem.Service === 'wordpress'
-          );
-
-          if (!wordpressContainer) {
-            throw new Error(
-              'Some error occurred finding the provisioned wordpress container'
-            );
-          }
-
-          const { stdout: containerInspectionResult } = await execa(
-            parsedConfig.engine,
-            ['inspect', '--type', 'container', wordpressContainer.Name]
-          );
-
-          const [wordpressContainerDetails] = JSON.parse(
-            containerInspectionResult
-          ).filter(({ Name }) =>
-            new RegExp(wordpressContainer.Name).test(Name)
-          );
-
-          if (wordpressContainerDetails) {
-            execa(
-              'code',
-              [
-                '-n',
-                '--folder-uri',
-                generateVSCodeAttachToContainerConnectionString(
-                  wordpressContainerDetails.Name,
-                  wordpressContainerDetails.Config.WorkingDir
-                ),
-              ],
-              {
-                env: {
-                  ...sourceRunnerEnvValues(parsedConfig),
-                  COMPOSE_PROJECT_NAME: parsedConfig.name,
-                },
-              }
-            );
-          }
-        },
-        {
-          retries: 20,
-          onFailedAttempt(error) {
-            if (!error.retriesLeft) {
-              // eslint-disable-next-line no-console
-              console.error(
-                'Failed to discover container to attach to within specified time'
-              );
-            }
-          },
-        }
-      );
-    }
-  });
+  if (code) {
+    runner.addListener('spawn', openCode);
+  }
 
   // setup handler to terminate runner using CTRL+C
   process.on(
