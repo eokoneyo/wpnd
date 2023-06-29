@@ -26,7 +26,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: 'yarn'
-          node-version: '14.x'
+          node-version: '18.x'
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Install Container Structure Test Binary
