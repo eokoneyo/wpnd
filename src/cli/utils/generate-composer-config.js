@@ -1,19 +1,28 @@
-import url from 'url';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 
-// eslint-disable-next-line import/no-dynamic-require,no-underscore-dangle
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+import { writeJsonFile } from 'write-json-file';
 
-const generateComposerConfig = (requireFn, userDefinedPackages) => {
-  // eslint-disable-next-line import/no-dynamic-require
+const requireFn = createRequire(import.meta.url);
+
+const generateComposerConfig = (parsedConfig) => {
   const composerJsonTemplate = requireFn(
-    path.join(__dirname, '../../templates/composer.json')
+    path.resolve(
+      fileURLToPath(
+        new URL('../../templates/composer.json', import.meta.url).href
+      )
+    )
   );
 
-  return {
-    ...composerJsonTemplate,
-    require: userDefinedPackages,
-  };
+  return writeJsonFile(
+    path.join(process.cwd(), parsedConfig.distDir, 'composer.json'),
+    {
+      ...composerJsonTemplate,
+      require: parsedConfig.wpackagist,
+    },
+    { indent: 2 }
+  );
 };
 
 export default generateComposerConfig;

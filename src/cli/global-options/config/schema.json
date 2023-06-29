@@ -14,17 +14,31 @@
       "description": "Specify name for directory that will contain the theme and plugin directory",
       "type": "string"
     },
-    "skipDockerCheck": {
-      "description": "Specify if check for docker is skipped whilst attempting to provision environment",
-      "type": "boolean"
+    "engine": {
+      "description": "Container engine implementation to use",
+      "type": "string",
+      "enum": ["docker", "podman"]
     },
     "environment": {
       "title": "image",
       "type": "object",
       "properties": {
+        "skipEngineCheck": {
+          "description": "Specify if check for selected container engine is skipped whilst attempting to provision environment",
+          "type": "boolean"
+        },
         "port": {
           "description": "PORT on which app shall be exposed on",
-          "type": "string"
+          "test": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          }
         },
         "rebuildOnStart": {
           "description": "Flag to help decide if image is rebuilt on start",
@@ -56,5 +70,6 @@
       "type": "object"
     }
   },
+  "required": ["engine"],
   "additionalProperties": false
 }

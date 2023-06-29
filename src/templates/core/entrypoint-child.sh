@@ -27,7 +27,7 @@ for record in "/usr/src/wpnd"/*; do
 
       elif [[ -d "$f" && ! -d "$mount_path" && ! "$record_name" = "mu-plugins" ]]; then
 
-        echo "Linking $(basename "$f") to $mount_path_parent_dir"
+        echo "Linking $(basename "$f") directory to $mount_path_parent_dir"
 
         ln -s "$f" "$mount_path_parent_dir"
       fi

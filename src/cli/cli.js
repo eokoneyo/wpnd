@@ -1,21 +1,24 @@
 import path from 'path';
-import * as url from 'url';
+import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 
 import chalk from 'chalk';
 import { Command } from 'commander';
 
-import buildStartCommand from './commands/start.js';
-import buildDestroyCommand from './commands/destroy.js';
-import buildShellCommand from './commands/shell.js';
+import buildStartCommand from './commands/start/start.js';
+import buildDestroyCommand from './commands/destroy/destroy.js';
+import buildShellCommand from './commands/shell/shell.js';
+import configOption, {
+  resolveConfigValue,
+} from './global-options/config/index.js';
 
-const require = createRequire(import.meta.url);
+const requireFn = createRequire(import.meta.url);
 
-// eslint-disable-next-line import/no-dynamic-require,no-underscore-dangle
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-
-// eslint-disable-next-line import/no-dynamic-require
-const pkg = require(path.join(__dirname, '../../package.json'));
+const pkg = requireFn(
+  path.resolve(
+    fileURLToPath(new URL('../../package.json', import.meta.url).href)
+  )
+);
 
 const program = new Command();
 
@@ -23,15 +26,20 @@ program
   .name('wpnd')
   .description('A CLI util for provisioning local wordpress dev environment')
   .version(pkg.version)
-  .configureOutput({
-    outputError(str, write) {
-      return write(`${chalk.red.bold('ERROR')}: ${str}`);
-    },
+  .addOption(configOption)
+  .hook('preSubcommand', (thisCommand) => {
+    const { config: configPath } = thisCommand.opts();
+    thisCommand.setOptionValue('parsedConfig', resolveConfigValue(configPath));
   })
   .addCommand(buildStartCommand())
   .addCommand(buildShellCommand())
   .addCommand(buildDestroyCommand())
-  .showSuggestionAfterError();
+  .showSuggestionAfterError()
+  .configureOutput({
+    outputError(str, write) {
+      return write(`${chalk.red.bold('ERROR')}: ${str}`);
+    },
+  });
 
 async function cli(args) {
   await program.parseAsync(args);

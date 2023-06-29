@@ -12,8 +12,8 @@
   "scripts": {
     "prepare": "husky install",
     "lint": "eslint .",
-    "test:container": "container-structure-test test --config src/__tests__/config-cst.yaml --image $(grep name ./playground/wpnd.config.json | cut -d'\"' -f4)",
-    "test:unit": "yarn node --experimental-vm-modules $(yarn bin jest) --config jest.config.cjs"
+    "test:container": "container-structure-test test --config src/__tests__/config-cst.yaml --image $(grep name ./playground/wpnd.config.json | cut -d'\"' -f4)-wordpress",
+    "test:unit": "yarn node --experimental-vm-modules $(yarn bin jest) --config jest.config.cjs --detectOpenHandles"
   },
   "publishConfig": {
     "access": "public"
@@ -47,14 +47,15 @@
   },
   "dependencies": {
     "chalk": "4.1.2",
-    "commander": "^9.2.0",
+    "commander": "^10.0.1",
     "cpy": "^9.0.1",
     "execa": "^6.1.0",
-    "listr": "^0.14.3",
+    "listr2": "^6.6.0",
     "lodash.merge": "^4.6.2",
+    "p-retry": "^5.1.2",
     "random-words": "^1.3.0",
     "schema-utils": "^4.0.0",
-    "which": "^2.0.2",
+    "which": "^3.0.1",
     "write-json-file": "^5.0.0"
   },
   "packageManager": "yarn@3.2.1"
