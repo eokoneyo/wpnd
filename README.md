@@ -45,8 +45,3 @@ adjacent to the project src directory. An alternative path to the config file mi
 | wpackagist                  | Specify themes or plugins from [wpackagist](https://wpackagist.org/) to be bundled by default in the provision environment, <br/> config follows the same definition that would be specified in a composer config file | `object`  | {}          |
 
 
-### Troubleshooting
-https://code.visualstudio.com/docs/editor/command-line#_code-is-not-recognized-as-an-internal-or-external-command
-
-issues start podman machine
-https://github.com/containers/podman/issues/17403
