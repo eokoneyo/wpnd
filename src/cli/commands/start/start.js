@@ -10,16 +10,22 @@ const requireFn = createRequire(import.meta.url);
 
 const nodeWhich = requireFn('which');
 
-export const prerequisitesCheck = ({ isCode, containerEngine }) => {
+export const prerequisitesCheck = ({
+  isCode,
+  containerEngine,
+  skipEngineCheck = false,
+}) => {
   // TODO: handle error when specified engine is not available
   const tasks = new Listr([
     {
       title: 'Check Docker Status',
+      skip: () => skipEngineCheck,
       enabled: () => containerEngine === 'docker',
       task: () => nodeWhich('docker'),
     },
     {
       title: 'Check podman binary',
+      skip: () => skipEngineCheck,
       enabled: () => containerEngine === 'podman',
       task: (ctx, task) =>
         nodeWhich('podman-compose').catch(() => {
@@ -28,7 +34,7 @@ export const prerequisitesCheck = ({ isCode, containerEngine }) => {
         }),
     },
     {
-      title: 'Check Code Binary',
+      title: 'Check VSCode Binary',
       enabled: () => isCode === true,
       task: () => nodeWhich('code'),
     },
@@ -73,17 +79,21 @@ const buildStartCommand = () => {
     .addOption(
       new Option(
         '--code',
-        'attach vscode to running container, leveraging its dev container feature'
+        'attach vscode to running container, leveraging its dev container feature, in this mode the complete wordpress installation become available'
       ).default(false)
     )
     .hook('preAction', async (parentCommand, actionCommand) => {
       const {
         code,
-        parsedConfig: { engine },
+        parsedConfig: { engine, environment },
       } = actionCommand.optsWithGlobals();
 
       try {
-        await prerequisitesCheck({ isCode: code, containerEngine: engine });
+        await prerequisitesCheck({
+          isCode: code,
+          containerEngine: engine,
+          skipEngineCheck: environment.skipEngineCheck,
+        });
       } catch (e) {
         parentCommand.error(e.message);
       }

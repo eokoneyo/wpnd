@@ -144,7 +144,7 @@ async function startActionHandler() {
   });
 
   if (code) {
-    runner.addListener('spawn', openCode);
+    runner.addListener('spawn', openCode.bind(null, parsedConfig));
   }
 
   // setup handler to terminate runner using CTRL+C
