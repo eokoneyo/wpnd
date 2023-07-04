@@ -9,7 +9,7 @@ const provisionContainerDefinition = async (distDir) => {
       path.dirname(url.fileURLToPath(import.meta.url)),
       '../../templates/core/*'
     ),
-    path.join(process.cwd(), distDir)
+    path.join(distDir)
   );
 };
 

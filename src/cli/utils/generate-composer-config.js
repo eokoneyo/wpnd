@@ -16,7 +16,7 @@ const generateComposerConfig = (parsedConfig) => {
   );
 
   return writeJsonFile(
-    path.join(process.cwd(), parsedConfig.distDir, 'composer.json'),
+    path.join(parsedConfig.distDir, 'composer.json'),
     {
       ...composerJsonTemplate,
       require: parsedConfig.wpackagist,

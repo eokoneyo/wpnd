@@ -11,10 +11,7 @@ const destroyDockerRunner = (parsedConfig) =>
       'compose',
       parsedConfig.name
         ? ['--project-name', parsedConfig.name]
-        : [
-            '--file',
-            path.join(process.cwd(), parsedConfig.distDir, 'stack.yml'),
-          ],
+        : ['--file', path.join(parsedConfig.distDir, 'stack.yml')],
       'down',
     ].flat(),
     {
