@@ -1,3 +1,11 @@
+## [0.7.1](https://github.com/eokoneyo/wpnd/compare/v0.7.0...v0.7.1) (2023-07-04)
+
+
+### Bug Fixes
+
+* missed implementation detail with resolving path relative to config file ([dbb6015](https://github.com/eokoneyo/wpnd/commit/dbb601567b62ca33f3b22474d6420b3f59bcf2da))
+* use path from parsed config to resolve container definition ([ce426b8](https://github.com/eokoneyo/wpnd/commit/ce426b8486e75120f471bce46ae0a9854270eeca))
+
 # [0.7.0](https://github.com/eokoneyo/wpnd/compare/v0.6.0...v0.7.0) (2023-07-04)
 
 
