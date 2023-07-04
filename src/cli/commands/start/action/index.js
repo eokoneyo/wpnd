@@ -24,7 +24,7 @@ const generateVSCodeAttachToContainerConnectionString = (
     'hex'
   )}${pathString}`;
 
-const openCode = async (parsedConfig) => {
+const openVSCode = async (parsedConfig) => {
   // setup handler to open started container in code when the code flag is passed.
   await pRetry(
     async () => {
@@ -33,10 +33,7 @@ const openCode = async (parsedConfig) => {
         [
           parsedConfig.engine === 'docker' ? 'compose' : null,
           parsedConfig.name ? ['--project-name', parsedConfig.name] : null,
-          [
-            '--file',
-            path.join(process.cwd(), parsedConfig.distDir, 'stack.yml'),
-          ],
+          ['--file', path.join(parsedConfig.distDir, 'stack.yml')],
           'ps',
           ['--filter', 'status=running'],
           ['--format', 'json'],
@@ -144,7 +141,7 @@ async function startActionHandler() {
   });
 
   if (code) {
-    runner.addListener('spawn', openCode.bind(null, parsedConfig));
+    runner.addListener('spawn', openVSCode.bind(null, parsedConfig));
   }
 
   // setup handler to terminate runner using CTRL+C
