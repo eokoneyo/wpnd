@@ -4263,12 +4263,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-fail-on-console@npm:^2.4.2":
-  version: 2.4.2
-  resolution: "jest-fail-on-console@npm:2.4.2"
+"jest-fail-on-console@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "jest-fail-on-console@npm:3.1.1"
   dependencies:
     chalk: ^4.1.0
-  checksum: 76c55424180640dff176cc89f39f43929a3d5a44d66af227d9117767bf32c2ec0da23712e345e15aec1caf4d14fb6626f897c23ca8643559ca069e18ed969186
+  checksum: dbc244766fb78525b2d4a7e879678b91032acefa04694e17edb5917e325abf8ee356bdf728bc1c89058d67b9c8b3da4cd45515232eb9ab1b973a6b4f57bfb7af
   languageName: node
   linkType: hard
 
@@ -7053,7 +7053,7 @@ __metadata:
     fs-monkey: ^1.0.3
     husky: ^8.0.1
     jest: ^28.1.3
-    jest-fail-on-console: ^2.4.2
+    jest-fail-on-console: ^3.1.1
     lint-staged: ^12.4.1
     listr2: ^6.6.0
     lodash.merge: ^4.6.2
