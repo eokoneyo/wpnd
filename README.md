@@ -6,7 +6,7 @@ There's an expectation that NodeJS and your container engine of choice is also p
 A quick test dev environment using config defaults can be spun off leveraging npx by running the following command;
 
 ```bash
-npx -y --package=wpnd@latest wpnd start
+npx --package=wpnd@latest wpnd start
 ```
 
 # Usage
@@ -26,7 +26,8 @@ by specifying a config file. Checkout the [playground](https://github.com/eokone
 # Config Files
 
 WPND currently supports a `wpnd.config.json` file. It is expected to be in the project working directory, 
-adjacent to the project src directory. An alternative path to the config file might could be provided with `--config <file>` option.
+adjacent to the project src directory. An alternative path to the config file might could be provided with `--config <file>` option,
+when this is done the resolution of the srcDir and distDir will be relative to the containing directory of the config file.
 
 ### Config Options
 
