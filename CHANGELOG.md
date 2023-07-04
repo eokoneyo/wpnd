@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/eokoneyo/wpnd/compare/v0.6.0...v0.7.0) (2023-07-04)
+
+
+### Features
+
+* make resolution of src and dist directory relative to config file directory ([0c457a5](https://github.com/eokoneyo/wpnd/commit/0c457a5c6c3f95b8ac553bf5d9fcbf7741ea5e26))
+
 # [0.6.0](https://github.com/eokoneyo/wpnd/compare/v0.5.0...v0.6.0) (2023-06-29)
 
 
