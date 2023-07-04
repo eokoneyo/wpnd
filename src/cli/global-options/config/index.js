@@ -60,7 +60,11 @@ export const resolveConfigValue = (configFilePath) => {
     // in cases where no file was found but the provided values matches the default value,
     // ignore and return the default config values
     if (e.code === 'ENOENT' && configFilePath === DEFAULT_CONFIG_FILE) {
-      return defaultConfigOptions;
+      return {
+        ...defaultConfigOptions,
+        srcDir: path.join(process.cwd(), defaultConfigOptions.srcDir),
+        distDir: path.join(process.cwd(), defaultConfigOptions.distDir),
+      };
     }
 
     if (e.code === 'ENOENT') {
