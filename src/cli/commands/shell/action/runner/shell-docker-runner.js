@@ -11,10 +11,7 @@ const shellDockerRunner = (parsedConfig, serviceName) =>
       'compose',
       parsedConfig.name
         ? ['--project-name', parsedConfig.name]
-        : [
-            '--file',
-            path.join(process.cwd(), parsedConfig.distDir, 'stack.yml'),
-          ],
+        : ['--file', path.join(parsedConfig.distDir, 'stack.yml')],
       'exec',
       serviceName,
       ['bash'].concat(

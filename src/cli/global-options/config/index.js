@@ -6,7 +6,7 @@ import merge from 'lodash.merge';
 import { validate } from 'schema-utils';
 import { Option, InvalidArgumentError } from 'commander';
 
-const require = createRequire(import.meta.url);
+const requireFn = createRequire(import.meta.url);
 
 const DEFAULT_CONFIG_FILE = 'wpnd.config.json';
 
@@ -43,16 +43,19 @@ export const resolveConfigValue = (configFilePath) => {
   try {
     fs.accessSync(configPath, FSConstants.R_OK);
 
-    const configSchema = require('./schema.json');
+    const configSchema = requireFn('./schema.json');
 
-    // eslint-disable-next-line import/no-dynamic-require
-    const parsedConfig = require(configPath);
+    const parsedConfig = requireFn(configPath);
 
     const mergedConfig = merge(defaultConfigOptions, parsedConfig);
 
     validate(configSchema, mergedConfig);
 
-    return mergedConfig;
+    return {
+      ...mergedConfig,
+      srcDir: path.join(path.dirname(configPath), mergedConfig.srcDir),
+      distDir: path.join(path.dirname(configPath), mergedConfig.distDir),
+    };
   } catch (e) {
     // in cases where no file was found but the provided values matches the default value,
     // ignore and return the default config values

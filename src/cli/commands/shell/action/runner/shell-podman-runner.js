@@ -9,7 +9,7 @@ const shellDockerRunner = (parsedConfig, service) =>
     'podman-compose',
     [
       parsedConfig.name ? ['--project-name', parsedConfig.name] : null,
-      ['--file', path.join(process.cwd(), parsedConfig.distDir, 'stack.yml')],
+      ['--file', path.join(parsedConfig.distDir, 'stack.yml')],
       'exec',
       service,
       ['bash'].concat(
