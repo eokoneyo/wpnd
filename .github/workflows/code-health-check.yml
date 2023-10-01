@@ -28,7 +28,7 @@ jobs:
           cache: 'yarn'
           node-version: '18.x'
       - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
       - name: Install Container Structure Test Binary
         run: >
           curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
