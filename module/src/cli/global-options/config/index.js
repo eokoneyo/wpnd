@@ -10,6 +10,33 @@ const requireFn = createRequire(import.meta.url);
 
 const DEFAULT_CONFIG_FILE = 'wpnd.config.json';
 
+/**
+ *
+ * @typedef EnvironmentConfig
+ * @property {number} port
+ * @property {boolean} rebuildOnStart
+ * @property {boolean} skipEngineCheck
+ * @property {object} db
+ * @property {string} db.password
+ * @property {string} db.name
+ * @property {string} db.user
+ */
+
+/**
+ *
+ * @typedef WPNDConfig
+ * @property {string} [name]
+ * @property {string} [distDir]
+ * @property {string} [srcDir]
+ * @property {'docker' | 'podman'} engine
+ * @property {EnvironmentConfig} [environment]
+ * @property {object} [wpackagist]
+ */
+
+/**
+ *
+ * @type {WPNDConfig}
+ */
 const defaultConfigOptions = {
   srcDir: 'src',
   distDir: '.wpnd', // cannot leave project directory
@@ -26,6 +53,11 @@ const defaultConfigOptions = {
   },
 };
 
+/**
+ *
+ * @param {string} configFilePath
+ * @returns {WPNDConfig}
+ */
 export const resolveConfigValue = (configFilePath) => {
   if (!/.json$/.test(configFilePath)) {
     throw new InvalidArgumentError('Unsupported config file extension');
