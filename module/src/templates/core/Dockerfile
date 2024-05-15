@@ -1,4 +1,4 @@
-FROM wordpress:5.9.3-php8.0-apache
+FROM wordpress:6.5.3-php8.1-apache
 
 COPY custom.ini* $PHP_INI_DIR/conf.d/
 
