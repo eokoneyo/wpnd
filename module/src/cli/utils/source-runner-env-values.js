@@ -20,7 +20,8 @@ const sourceRunnerEnvValues = (config) => ({
   DB_PASSWORD: config.environment.db.password,
   ...(process.arch === 'arm64'
     ? {
-        DOCKER_DEFAULT_PLATFORM: 'linux/amd64',
+        // see https://docs.docker.com/engine/reference/commandline/cli/#environment-variables
+        DOCKER_DEFAULT_PLATFORM: 'linux/arm64',
       }
     : {}),
 });
