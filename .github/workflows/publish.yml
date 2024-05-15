@@ -21,9 +21,8 @@ jobs:
         run: yarn install --immutable
       - name: Install semantic-release extra plugins
         run: yarn add @semantic-release/changelog @semantic-release/git --dev
-#      - name: Build
-#        run: yarn build
       - name: Release
+        working-directory: module
         run: yarn dlx semantic-release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
