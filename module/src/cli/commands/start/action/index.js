@@ -12,9 +12,9 @@ import startPodmanComposeRunner from './runner/start-podman-compose-runner.js';
 
 /**
  * @link https://github.com/microsoft/vscode-remote-release/issues/5278#issuecomment-1408712695
- * @param containerNameOrID
- * @param pathString
- * @returns {`vscode-remote://attached-container+${string}${string}`}
+ * @param {string} containerNameOrID
+ * @param {string} pathString
+ * @returns {`vscode-remote://attached-container+${string}`}
  */
 const generateVSCodeAttachToContainerConnectionString = (
   containerNameOrID,
@@ -24,6 +24,11 @@ const generateVSCodeAttachToContainerConnectionString = (
     'hex'
   )}${pathString}`;
 
+/**
+ *
+ * @param {import('../../../global-options/config/index.js').WPNDConfig} parsedConfig
+ * @returns {Promise<void>}
+ */
 const openVSCode = async (parsedConfig) => {
   // setup handler to open started container in code when the code flag is passed.
   await pRetry(

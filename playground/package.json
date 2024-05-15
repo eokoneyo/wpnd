@@ -2,11 +2,15 @@
   "name": "wpnd-playground",
   "private": true,
   "scripts": {
-    "wpnd": "../src/bin/index.js",
+    "postinstall": "yalc publish --changed --push ../module && yalc link wpnd",
+    "wpnd": "node_modules/.bin/wpnd",
     "start": "yarn wpnd start",
     "start:code": "yarn wpnd start --code",
     "destroy": "yarn wpnd destroy",
     "shell:wordpress": "yarn wpnd shell",
     "shell:db": "yarn wpnd shell -s db"
+  },
+  "devDependencies": {
+    "yalc": "^1.0.0-pre.53"
   }
 }

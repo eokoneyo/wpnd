@@ -1,5 +1,7 @@
 FROM wordpress:5.9.3-php8.0-apache
 
+COPY custom.ini* $PHP_INI_DIR/conf.d/
+
 # include composer
 COPY --from=composer/composer /usr/bin/composer /usr/bin/composer
 # include generated composer file and install defined themes and plugins

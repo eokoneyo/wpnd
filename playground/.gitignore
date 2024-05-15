@@ -1,2 +1,6 @@
 .wpnd/
 .devcontainer/
+
+# Yalc
+.yalc
+yalc.*
