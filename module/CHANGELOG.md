@@ -1,3 +1,13 @@
+## [0.7.2](https://github.com/eokoneyo/wpnd/compare/v0.7.1...v0.7.2) (2024-12-14)
+
+
+### Bug Fixes
+
+* bump wordpress version to 6.5.3 ([2cf7e31](https://github.com/eokoneyo/wpnd/commit/2cf7e31cc36af45776b31aeb38930140eabb3947))
+* resolve issue with mounting project files into container volume ([0f7850d](https://github.com/eokoneyo/wpnd/commit/0f7850d180cbabbb690d3d6e68f64046787c41b4))
+* resolve issue with using mysql on apple silicon ([0d49d1d](https://github.com/eokoneyo/wpnd/commit/0d49d1dc528ce66ae684c7ddfa6f1c1cc744b811))
+* upgrade mysql to version 8.4, also make it an explicit dependency for wordpress container ([1494500](https://github.com/eokoneyo/wpnd/commit/1494500c265bd5147e1f874a9e57b798e2a8a147))
+
 ## [0.7.1](https://github.com/eokoneyo/wpnd/compare/v0.7.0...v0.7.1) (2023-07-04)
 
 
