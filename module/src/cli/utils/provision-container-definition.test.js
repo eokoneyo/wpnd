@@ -18,7 +18,8 @@ describe('provisionContainerDefinition', () => {
     expect(mockCpy).toHaveBeenCalledTimes(1);
     expect(mockCpy).toHaveBeenCalledWith(
       expect.stringMatching('templates/core/*'),
-      expect.stringMatching(new RegExp(String.raw`${'some-test-dir'}$`))
+      expect.stringMatching(new RegExp(String.raw`${'some-test-dir'}$`)),
+      { flat: true }
     );
   });
 });

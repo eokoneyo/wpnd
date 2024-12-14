@@ -6,6 +6,11 @@ import { writeJsonFile } from 'write-json-file';
 
 const requireFn = createRequire(import.meta.url);
 
+/**
+ *
+ * @param {import('../global-options/config').WPNDConfig} parsedConfig
+ * @returns {Promise<void>}
+ */
 const generateComposerConfig = (parsedConfig) => {
   const composerJsonTemplate = requireFn(
     path.resolve(

@@ -21,9 +21,8 @@ jobs:
         run: yarn install --immutable
       - name: Install semantic-release extra plugins
         run: yarn add @semantic-release/changelog @semantic-release/git --dev
-#      - name: Build
-#        run: yarn build
       - name: Release
+        working-directory: module
         run: yarn dlx semantic-release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -33,4 +32,4 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
-      - run: echo 'The triggering workflow failed'
+      - run: echo 'code health check workflow failed'

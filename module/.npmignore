@@ -1,0 +1,8 @@
+.eslintcache
+.eslintrc
+/.releaserc
+
+# Test related files
+jest.config.cjs
+__tests__/
+**/*.test.js
