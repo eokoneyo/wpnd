@@ -16,11 +16,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: 'yarn'
-          node-version: '18.x'
+          node-version: '22.x'
       - name: Install dependencies and build 🔧
         run: yarn install --immutable
       - name: Install semantic-release extra plugins
-        run: yarn add @semantic-release/changelog @semantic-release/git --dev
+        run: yarn add @semantic-release/changelog@6.0.3 @semantic-release/git@10.0.1 --dev
       - name: Release
         working-directory: module
         run: yarn dlx semantic-release
