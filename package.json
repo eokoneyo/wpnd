@@ -9,7 +9,9 @@
     "nuke": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
     "prepare": "husky install",
     "lint": "eslint .",
-    "playground:start": "yarn workspace wpnd-playground start"
+    "playground:start": "yarn workspace wpnd-playground start",
+    "playground:destroy": "yarn workspace wpnd-playground destroy",
+    "test:container": "container-structure-test test --config config-cst.yaml --image $(grep name ./playground/wpnd.config.json | cut -d'\"' -f4)-wordpress"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",

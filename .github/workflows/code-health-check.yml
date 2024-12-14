@@ -16,7 +16,7 @@ jobs:
       - name: Lint
         run: yarn lint
       - name: Unit Test
-        run: yarn test:unit
+        run: yarn workspace wpnd test:unit
 
   verify-container:
     needs: code-health-check
@@ -39,10 +39,8 @@ jobs:
       - name: Install Project Dependencies
         run: yarn install --immutable
       - name: Build and start image
-        working-directory: playground
-        run: yarn start -d
+        run: yarn playground:start -d
       - name: Test Generated Container
         run: yarn test:container
       - name: Teardown created container
-        working-directory: playground
-        run: yarn destroy
+        run: yarn playground:destroy

@@ -1,15 +1,5 @@
-.idea/
-.github/
-.husky/
-.yarn/
-.editorconfig
-.prettierrc.json
 .eslintcache
 .eslintrc
-playground
-/.yarnrc.yml
-/.lintstagedrc
-/commitlint.config.cjs
 /.releaserc
 
 # Test related files

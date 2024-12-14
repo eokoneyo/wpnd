@@ -10,7 +10,6 @@
   "license": "MIT",
   "bin": "src/bin/index.js",
   "scripts": {
-    "test:container": "container-structure-test test --config src/__tests__/config-cst.yaml --image $(grep name ../playground/wpnd.config.json | cut -d'\\\\\\\"' -f4)-wordpress",
     "test:unit": "yarn node --experimental-vm-modules $(yarn bin jest) --config jest.config.cjs --detectOpenHandles"
   },
   "publishConfig": {
