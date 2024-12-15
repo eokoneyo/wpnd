@@ -1,3 +1,10 @@
+## [0.7.3](https://github.com/eokoneyo/wpnd/compare/v0.7.2...v0.7.3) (2024-12-15)
+
+
+### Bug Fixes
+
+* ignore mocks directory ([3afee56](https://github.com/eokoneyo/wpnd/commit/3afee566e7eee4555de0951e7f0e2277b22ece63))
+
 ## [0.7.2](https://github.com/eokoneyo/wpnd/compare/v0.7.1...v0.7.2) (2024-12-14)
 
 
