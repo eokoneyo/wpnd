@@ -5,4 +5,5 @@
 # Test related files
 jest.config.cjs
 __tests__/
+__mocks__/
 **/*.test.js
