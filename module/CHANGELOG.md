@@ -1,3 +1,10 @@
+## [0.7.4](https://github.com/eokoneyo/wpnd/compare/v0.7.3...v0.7.4) (2024-12-28)
+
+
+### Bug Fixes
+
+* fix regression with provisioning wp-content through wpackagist ([10d0721](https://github.com/eokoneyo/wpnd/commit/10d07217694d18f7476e34a430cef9511d6389c1))
+
 ## [0.7.3](https://github.com/eokoneyo/wpnd/compare/v0.7.2...v0.7.3) (2024-12-15)
 
 
