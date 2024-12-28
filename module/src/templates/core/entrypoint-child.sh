@@ -38,6 +38,9 @@ for record in "/usr/src/wpnd"/*; do
   fi
 done
 
+# install specified plugins and theme from wp-packagist
+composer update --no-autoloader --no-progress
+
 # pass along command to start container,
 # see https://github.com/docker-library/wordpress/blob/master/Dockerfile.template#L261 for possible values
 exec docker-entrypoint.sh "apache2-foreground"
