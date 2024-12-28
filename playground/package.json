@@ -2,8 +2,7 @@
   "name": "wpnd-playground",
   "private": true,
   "scripts": {
-    "postinstall": "yalc publish --changed --push ../module && yalc link wpnd",
-    "wpnd": "node_modules/.bin/wpnd",
+    "wpnd": "yalc publish --changed --push ../module && yalc link wpnd && node_modules/.bin/wpnd",
     "start": "yarn wpnd start",
     "start:code": "yarn wpnd start --code",
     "destroy": "yarn wpnd destroy",
