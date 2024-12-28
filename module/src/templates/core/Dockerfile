@@ -6,7 +6,6 @@ COPY custom.ini* $PHP_INI_DIR/conf.d/
 COPY --from=composer/composer /usr/bin/composer /usr/bin/composer
 # include generated composer file and install defined themes and plugins
 ADD composer.json .
-RUN composer install --no-autoloader --no-progress
 
 # Add metadata (https://code.visualstudio.com/docs/devcontainers/containers#_inheriting-metadata) to provide hints to
 # vscode if container gets attached, see https://code.visualstudio.com/docs/devcontainers/attach-container#_attached-container-configuration-reference for
