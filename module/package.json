@@ -34,7 +34,7 @@
   "dependencies": {
     "chalk": "4.1.2",
     "commander": "^10.0.1",
-    "cpy": "^9.0.1",
+    "cpy": "^11.1.0",
     "execa": "^6.1.0",
     "listr2": "^6.6.0",
     "lodash.merge": "^4.6.2",
