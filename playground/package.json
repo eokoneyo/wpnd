@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "wpnd": "yalc publish --changed --push ../module && yalc link wpnd && node_modules/.bin/wpnd",
+    "init": "yarn wpnd init",
     "start": "yarn wpnd start",
     "start:code": "yarn wpnd start --code",
     "destroy": "yarn wpnd destroy",
