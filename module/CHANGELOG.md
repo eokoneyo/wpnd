@@ -1,3 +1,10 @@
+# [0.8.0](https://github.com/eokoneyo/wpnd/compare/v0.7.4...v0.8.0) (2025-01-11)
+
+
+### Features
+
+* add init method to cli to only generate template files ([5b4a612](https://github.com/eokoneyo/wpnd/commit/5b4a612e8bc1c8726919143f62c4a5a8b5d8a19f))
+
 ## [0.7.4](https://github.com/eokoneyo/wpnd/compare/v0.7.3...v0.7.4) (2024-12-28)
 
 
