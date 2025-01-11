@@ -5,6 +5,7 @@ import { createRequire } from 'module';
 import chalk from 'chalk';
 import { Command } from 'commander';
 
+import buildInitCommand from './commands/init/init.js';
 import buildStartCommand from './commands/start/start.js';
 import buildDestroyCommand from './commands/destroy/destroy.js';
 import buildShellCommand from './commands/shell/shell.js';
@@ -31,6 +32,7 @@ program
     const { config: configPath } = thisCommand.opts();
     thisCommand.setOptionValue('parsedConfig', resolveConfigValue(configPath));
   })
+  .addCommand(buildInitCommand())
   .addCommand(buildStartCommand())
   .addCommand(buildShellCommand())
   .addCommand(buildDestroyCommand())
