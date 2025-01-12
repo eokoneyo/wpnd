@@ -1,3 +1,10 @@
+## [0.8.3](https://github.com/eokoneyo/wpnd/compare/v0.8.2...v0.8.3) (2025-01-12)
+
+
+### Bug Fixes
+
+* add arg to specify wpnd host dir ([52fa86a](https://github.com/eokoneyo/wpnd/commit/52fa86af8b224f9bbd46911c5f0274a3ed85314f))
+
 ## [0.8.2](https://github.com/eokoneyo/wpnd/compare/v0.8.1...v0.8.2) (2025-01-12)
 
 
