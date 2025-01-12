@@ -1,4 +1,7 @@
-FROM wordpress:6.5.3-php8.1-apache
+# only supported value is "inline-vol-mount"
+ARG build_type
+
+FROM wordpress:6.5.3-php8.1-apache AS base
 
 COPY custom.ini* $PHP_INI_DIR/conf.d/
 
@@ -18,6 +21,14 @@ LABEL devcontainer.metadata='[{ \
     "devsense.phptools-vscode" \
   ] \
 }]'
+
+# passing the arg "build_type" with a value of "inline-vol-mount" provides a rudimentary hack to use this same dockerfile
+# to package an image that could be outside of development
+FROM base AS inline-vol-mount
+COPY $WPND_HOST_DIR_PATH /usr/src/wpnd
+
+
+FROM ${build_type:-base} as final
 
 COPY entrypoint-child.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint-child.sh
