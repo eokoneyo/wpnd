@@ -1,3 +1,10 @@
+## [0.8.1](https://github.com/eokoneyo/wpnd/compare/v0.8.0...v0.8.1) (2025-01-12)
+
+
+### Bug Fixes
+
+* add accomodation to bundle files from host into built image ([594e94d](https://github.com/eokoneyo/wpnd/commit/594e94dc45976079a1d41a366c744e797176384d))
+
 # [0.8.0](https://github.com/eokoneyo/wpnd/compare/v0.7.4...v0.8.0) (2025-01-11)
 
 
