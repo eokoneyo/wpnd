@@ -1,3 +1,10 @@
+## [0.8.2](https://github.com/eokoneyo/wpnd/compare/v0.8.1...v0.8.2) (2025-01-12)
+
+
+### Bug Fixes
+
+* use same character case for defining last stage in dockerfile ([eb535ce](https://github.com/eokoneyo/wpnd/commit/eb535ced7b0932cf072558f28a423c902c9ee1c1))
+
 ## [0.8.1](https://github.com/eokoneyo/wpnd/compare/v0.8.0...v0.8.1) (2025-01-12)
 
 
