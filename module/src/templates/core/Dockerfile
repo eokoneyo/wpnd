@@ -1,5 +1,6 @@
-# only supported value is "inline-vol-mount"
+# only supported value is "inlinemount"
 ARG build_type
+ARG WPND_HOST_DIR_PATH
 
 FROM wordpress:6.5.3-php8.1-apache AS base
 
@@ -22,10 +23,10 @@ LABEL devcontainer.metadata='[{ \
   ] \
 }]'
 
-# passing the arg "build_type" with a value of "inline-vol-mount" provides a rudimentary hack to use this same dockerfile
+# passing the arg "build_type" with a value of "inlinemount" provides a rudimentary hack to use this same dockerfile
 # to package an image that could be outside of development
-FROM base AS inline-vol-mount
-COPY $WPND_HOST_DIR_PATH /usr/src/wpnd
+FROM base AS inlinemount
+COPY ${WPND_HOST_DIR_PATH:-wp-content} /usr/src/wpnd
 
 
 FROM ${build_type:-base} AS final
