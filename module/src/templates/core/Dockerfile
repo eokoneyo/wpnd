@@ -28,7 +28,7 @@ FROM base AS inline-vol-mount
 COPY $WPND_HOST_DIR_PATH /usr/src/wpnd
 
 
-FROM ${build_type:-base} as final
+FROM ${build_type:-base} AS final
 
 COPY entrypoint-child.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint-child.sh
