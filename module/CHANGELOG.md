@@ -1,3 +1,10 @@
+## [0.8.4](https://github.com/eokoneyo/wpnd/compare/v0.8.3...v0.8.4) (2025-01-13)
+
+
+### Bug Fixes
+
+* contain build arg in step ([69cab3f](https://github.com/eokoneyo/wpnd/commit/69cab3f9956022ac560182034b82b1c3caf6b25f))
+
 ## [0.8.3](https://github.com/eokoneyo/wpnd/compare/v0.8.2...v0.8.3) (2025-01-12)
 
 
