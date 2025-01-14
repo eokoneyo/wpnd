@@ -26,7 +26,7 @@ LABEL devcontainer.metadata='[{ \
 # to package an image that could be outside of development
 FROM base AS inlinemount
 ARG WPND_HOST_DIR_PATH
-COPY ${WPND_HOST_DIR_PATH:-wp-content} /usr/src/wpnd
+ADD ${WPND_HOST_DIR_PATH:-wp-content} /usr/src/wpnd
 
 
 FROM ${build_type:-base} AS final
