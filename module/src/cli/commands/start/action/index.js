@@ -3,8 +3,7 @@ import path from 'path';
 import { execa } from 'execa';
 import pRetry from 'p-retry';
 
-import provisionContainerDefinition from '../../../utils/provision-container-definition.js';
-import generateComposerConfig from '../../../utils/generate-composer-config.js';
+import generateEnvironmentDefinition from '../../../utils/environment-definition-generator/generator.js';
 import sourceRunnerEnvValues from '../../../utils/source-runner-env-values.js';
 
 import startDockerRunner from './runner/start-docker-runner.js';
@@ -113,10 +112,7 @@ const openVSCode = async (parsedConfig) => {
 async function startActionHandler() {
   const { parsedConfig, detached, verbose, code } = this.optsWithGlobals();
 
-  await Promise.allSettled([
-    provisionContainerDefinition(parsedConfig.distDir),
-    generateComposerConfig(parsedConfig),
-  ]);
+  await generateEnvironmentDefinition(parsedConfig);
 
   /**
    * @type {(config: object) => import('execa').ExecaChildProcess}

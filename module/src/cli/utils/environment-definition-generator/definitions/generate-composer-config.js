@@ -8,14 +8,14 @@ const requireFn = createRequire(import.meta.url);
 
 /**
  *
- * @param {import('../global-options/config').WPNDConfig} parsedConfig
+ * @param {import('../../../global-options/config/index.js').WPNDConfig} parsedConfig
  * @returns {Promise<void>}
  */
 const generateComposerConfig = (parsedConfig) => {
   const composerJsonTemplate = requireFn(
     path.resolve(
       fileURLToPath(
-        new URL('../../templates/composer.json', import.meta.url).href
+        new URL('../../../../templates/composer.json', import.meta.url).href
       )
     )
   );

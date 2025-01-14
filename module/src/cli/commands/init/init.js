@@ -1,11 +1,11 @@
 import { Command } from 'commander';
 
-import provisionContainerDefinition from '../../utils/provision-container-definition.js';
+import generateEnvironmentDefinition from '../../utils/environment-definition-generator/generator.js';
 
 export async function initializationHandler() {
   const { parsedConfig } = this.optsWithGlobals();
 
-  await provisionContainerDefinition(parsedConfig.distDir);
+  await generateEnvironmentDefinition(parsedConfig);
 }
 
 const buildInitCommand = () => {

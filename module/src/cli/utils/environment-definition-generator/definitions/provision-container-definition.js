@@ -12,7 +12,7 @@ const provisionContainerDefinition = async (distDir) => {
   await cpy(
     path.join(
       path.dirname(url.fileURLToPath(import.meta.url)),
-      '../../templates/core/*'
+      '../../../../templates/core/*'
     ),
     path.join(distDir),
     {
