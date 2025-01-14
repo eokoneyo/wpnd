@@ -1,15 +1,18 @@
 import { jest, describe, it, expect, afterEach } from '@jest/globals';
 
 jest.unstable_mockModule(
-  '../../../utils/provision-container-definition.js',
+  '../../../utils/environment-definition-generator/definitions/provision-container-definition.js',
   () => ({
     default: jest.fn(() => Promise.resolve()),
   })
 );
 
-jest.unstable_mockModule('../../../utils/generate-composer-config.js', () => ({
-  default: jest.fn(() => Promise.resolve()),
-}));
+jest.unstable_mockModule(
+  '../../../utils/environment-definition-generator/definitions/generate-composer-config.js',
+  () => ({
+    default: jest.fn(() => Promise.resolve()),
+  })
+);
 
 const mockSpawnedProcess = {
   on: jest.fn(),
