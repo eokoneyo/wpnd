@@ -1,3 +1,10 @@
+## [0.8.6](https://github.com/eokoneyo/wpnd/compare/v0.8.5...v0.8.6) (2025-01-14)
+
+
+### Bug Fixes
+
+* copy all required files in init command ([35a423f](https://github.com/eokoneyo/wpnd/commit/35a423f4be0a14fac5954fd6a5a2e0975aef5557))
+
 ## [0.8.5](https://github.com/eokoneyo/wpnd/compare/v0.8.4...v0.8.5) (2025-01-14)
 
 
