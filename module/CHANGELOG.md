@@ -1,3 +1,10 @@
+## [0.8.5](https://github.com/eokoneyo/wpnd/compare/v0.8.4...v0.8.5) (2025-01-14)
+
+
+### Bug Fixes
+
+* use add key word in place of the copy keyword ([1bfa6b8](https://github.com/eokoneyo/wpnd/commit/1bfa6b86dcedb42be37a5eea1e74ecb260827186))
+
 ## [0.8.4](https://github.com/eokoneyo/wpnd/compare/v0.8.3...v0.8.4) (2025-01-13)
 
 
